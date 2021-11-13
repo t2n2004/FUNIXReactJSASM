@@ -94,8 +94,5 @@ dist
 # Serverless directories
 .serverless/
 
-# FuseBox cache
-.fusebox/
-
 # TernJS port file
 .tern-port
