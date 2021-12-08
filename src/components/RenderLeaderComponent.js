@@ -1,24 +1,30 @@
 import React  from "react";
-import {  Media } from "reactstrap";
+import { Media } from "reactstrap";
 
     function RenderLeader({ leaders }) {
-        if (leaders != null) {
+        if (leaders != null) 
             return( 
                 <div>
-                    <div className="col-12 col-md-4 mt-5">
-                        <Media left middle>
-                            <Media object src={leaders.image} alt={leaders.name} />
-                        </Media>
-                        <Media body className='col-12 col-md-8 m-1'>
-                            <Media heading>{leaders.name}</Media>
-                            <p>{leaders.designation}</p>
-                            <p>{leaders.description}</p>
-                        </Media>
-                    </div>
-                </div>  
+                    {leaders.map((leader)=> {
+                        return (
+                            <div key={`leader-${leader.id}`} >
+                                <Media tag="li">
+                                    <Media left middle className="m-3">
+                                        <Media object src={leader.image} alt={leader.name} />
+                                    </Media>
+                                    <Media body className="m-3" >
+                                        <Media heading>{leader.name}</Media>
+                                        <p>{leader.designation}</p>
+                                        <p>{leader.description}</p>
+                                    </Media>
+                                </Media>
+                            </div>
+                        );
+                    })}
+                </div>
             )
-
-        } else {
+                   
+        else {
             return(
                 <div>1</div>
             )
