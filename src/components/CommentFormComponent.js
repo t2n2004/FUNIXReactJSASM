@@ -35,9 +35,9 @@ class CommentForm extends Component {
   }
 
   handleAddComment(event) {
-    event.preventDefault();
+    // event.preventDefault();
     this.toggleModal();
-    const message = `Author: ${this.author.value} Rating: ${this.rating.value} Comment: ${this.comment.value}`;
+    const message = "Current State is: " + JSON.stringify(event);
 
     setTimeout(() => {
       alert(message);
@@ -54,49 +54,79 @@ class CommentForm extends Component {
 
         <Modal isOpen={this.state.isModalOpen}>
           <ModalBody>
-            <Form onSubmit={this.handleAddComment}>
-              <FormGroup>
-                <Label htmlFor="rating">Rating</Label>
-                <Input
-                  type={"select"}
-                  size="1"
-                  id="rating"
-                  name="rating"
-                  innerRef={(input) => (this.rating = input)}
-                >
-                  <option value={"1"}>1</option>
-                  <option value={"2"}>2</option>
-                  <option value={"3"}>3</option>
-                  <option value={"4"}>4</option>
-                  <option value={"5"}>5</option>
-                </Input>
-              </FormGroup>
+            <LocalForm onSubmit={(values) => this.handleAddComment(values)}>
+              <Row className="form-group">
+                <Label htmlFor="rating" md={2}>
+                  Rating
+                </Label>
+                <Col md={10}>
+                  <Control.select
+                    model=".rating"
+                    id="rating"
+                    name="rating"
+                    placeholder="Rating"
+                    className="form-control"
+                  >
+                    <option value={"1"}>1</option>
+                    <option value={"2"}>2</option>
+                    <option value={"3"}>3</option>
+                    <option value={"4"}>4</option>
+                    <option value={"5"}>5</option>
+                  </Control.select>
+                </Col>
+              </Row>
 
-              <FormGroup>
-                <Label htmlFor="author">Your Name</Label>
-                <Input
-                  type="text"
-                  id="author"
-                  name="author"
-                  innerRef={(input) => (this.author = input)}
-                />
-              </FormGroup>
+              <Row className="form-group">
+                <Label htmlFor="author" md={2}>
+                  Author
+                </Label>
+                <Col md={10}>
+                  <Control.text
+                    model=".author"
+                    id="author"
+                    name="author"
+                    placeholder="Author"
+                    className="form-control"
+                    validators={{
+                      minLength: minLength(3),
+                      maxLength: maxLength(15),
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".author"
+                    show="touched"
+                    messages={{
+                      minLength: "Must be greater than 2 characters",
+                      maxLength: "Must be 15 characters or less",
+                    }}
+                  />
+                </Col>
+              </Row>
 
-              <FormGroup>
-                <Label htmlFor="comment">Comment</Label>
-                <Input
-                  type="textarea"
-                  rows={6}
-                  id="comment"
-                  name="comment"
-                  innerRef={(input) => (this.comment = input)}
-                />
-              </FormGroup>
+              <Row className="form-group">
+                <Label htmlFor="comment" md={2}>
+                  Your Comment
+                </Label>
+                <Col md={10}>
+                  <Control.textarea
+                    model=".comment"
+                    id="comment"
+                    name="comment"
+                    rows="6"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
 
-              <Button type="submit" value="submit" color="primary">
-                Submit Comment
-              </Button>
-            </Form>
+              <Row className="form-group">
+                <Col md={{ size: 10, offset: 2 }}>
+                  <Button type="submit" value="submit" color="primary">
+                    Submit Comment
+                  </Button>
+                </Col>
+              </Row>
+            </LocalForm>
           </ModalBody>
         </Modal>
       </div>
