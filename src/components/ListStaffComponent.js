@@ -15,10 +15,14 @@ class ListStaff extends Component {
     this.setState({ selectedStaff: staff });
   }
 
+  onColumSelect(col) {
+    this.setState({ colNumber: col });
+  }
+
   render() {
     const list = this.props.staffs.map((staff) => {
       return (
-        <div key={`staff-${staff.id}`} className="col-12 col-md-5 m-1" >
+        <div key={`staff-${staff.id}`} className={`col-12 col-md-${12/this.state.colNumber} m-1`}>
           <Card onClick={() => this.onStaffSelect(staff)}>{staff.name}</Card>
         </div>
       );
@@ -26,6 +30,10 @@ class ListStaff extends Component {
 
     return (
       <div className="container">
+        <div>
+          <Button onClick={() => this.onColumSelect(2)}>2 cột</Button>
+          <Button onClick={() => this.onColumSelect(3)}>3 cột</Button>
+        </div>
         <div className="row">{list}</div>
         <div className="row">
           <StaffDetail staff={this.state.selectedStaff} />

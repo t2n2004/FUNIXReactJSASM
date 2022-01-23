@@ -12,9 +12,9 @@ class StaffDetail extends Component {
               <Card>
                 <CardBody>
                   <CardTitle>Họ và tên: {this.props.staff.name}</CardTitle>
-                  <CardText>Ngày sinh: </CardText>
+                  <CardText>Ngày sinh: {`${dateFormat(this.props.staff.doB, "dd/mm/yyyy")}`}</CardText>
                   <CardText>
-                    Ngày vào công ty:  
+                    Ngày vào công ty:  {`${dateFormat(this.props.staff.startDate, "dd/mm/yyyy")}`}
                   </CardText>
                   <CardText>Phòng ban: {this.props.staff.department.name}</CardText>
                   <CardText>
