@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card } from "reactstrap";
+import { Card } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent.js";
 
 class ListStaff extends Component {
@@ -7,22 +7,26 @@ class ListStaff extends Component {
     super(props);
     this.state = {
       selectedStaff: null,
-      colNumber: 4
+      columnDisplay: 3,
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   onStaffSelect(staff) {
     this.setState({ selectedStaff: staff });
   }
 
-  onColumSelect(col) {
-    this.setState({ colNumber: col });
+  handleChange(event) {
+    this.setState({ columnDisplay: event.target.value });
   }
 
   render() {
     const list = this.props.staffs.map((staff) => {
       return (
-        <div key={`staff-${staff.id}`} className={`col-12 col-md-${12/this.state.colNumber} m-1`}>
+        <div
+          key={`staff-${staff.id}`}
+          className={`col-12 col-md-${12 / this.state.columnDisplay} my-1`}
+        >
           <Card onClick={() => this.onStaffSelect(staff)}>{staff.name}</Card>
         </div>
       );
@@ -30,10 +34,19 @@ class ListStaff extends Component {
 
     return (
       <div className="container">
-        <div>
-          <Button onClick={() => this.onColumSelect(2)}>2 cột</Button>
-          <Button onClick={() => this.onColumSelect(3)}>3 cột</Button>
+        <div className="row">
+          <form onChange={this.handleChange}>
+            <label>Nhập số cột muốn hiển thị: </label>
+            <select>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option selected value="3">
+                3
+              </option>
+            </select>
+          </form>
         </div>
+
         <div className="row">{list}</div>
         <div className="row">
           <StaffDetail staff={this.state.selectedStaff} />
