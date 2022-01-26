@@ -9,6 +9,7 @@ class ListStaff extends Component {
       selectedStaff: null,
       columnDisplay: 3,
     };
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -25,7 +26,7 @@ class ListStaff extends Component {
       return (
         <div
           key={`staff-${staff.id}`}
-          className={`col-12 col-md-${12 / this.state.columnDisplay} my-1`}
+          className={`col-12 col-sm-6 col-md-${12 / this.state.columnDisplay} my-1`}
         >
           <Card onClick={() => this.onStaffSelect(staff)}>{staff.name}</Card>
         </div>
@@ -35,21 +36,23 @@ class ListStaff extends Component {
     return (
       <div className="container">
         <div className="row">
-          <form onChange={this.handleChange}>
+          <form onChange={this.handleChange} className="d-none d-md-block">
             <label>Nhập số cột muốn hiển thị: </label>
             <select>
               <option value="1">1</option>
               <option value="2">2</option>
-              <option selected value="3">
+              <option defaultValue="3">
                 3
               </option>
+              <option value="4">4</option>
+              <option value="6">6</option>
             </select>
           </form>
         </div>
 
         <div className="row">{list}</div>
         <div className="row">
-          <StaffDetail staff={this.state.selectedStaff} />
+          <StaffDetail staff={this.state.selectedStaff} columnDisplay={this.state.columnDisplay} />
         </div>
         <div className="row">Bấm vào tên nhân viên để xem chi tiết</div>
       </div>

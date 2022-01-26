@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
+import { Card,  CardText, CardBody, CardTitle } from "reactstrap";
 import dateFormat from 'dateformat';
 
 class StaffDetail extends Component {
@@ -8,7 +8,7 @@ class StaffDetail extends Component {
       return (
         <div className="container">
           <div className="row">
-            <div className="col-12 col-md-5 m-1">
+            <div className={`col-12 col-sm-6 col-md-${12 / this.props.columnDisplay} my-1`}>
               <Card>
                 <CardBody>
                   <CardTitle>Họ và tên: {this.props.staff.name}</CardTitle>
