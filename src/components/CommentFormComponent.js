@@ -33,6 +33,7 @@ class CommentForm extends Component {
   handleAddComment(event) {
     // event.preventDefault();
     this.toggleModal();
+    this.props.addComment(this.state.dishId, event.rating, event.author, event.comment);
     const message = "Current State is: " + JSON.stringify(event);
 
     setTimeout(() => {
