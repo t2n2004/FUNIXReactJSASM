@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, Input, Button } from 'reactstrap';
+import SearchStaff from './SearchStaffComponent';
 import StaffDetail from './StaffDetailComponent';
 
 class ListStaff extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedStaff: null,
+      selectedStaff: null
     };
   }
 
@@ -33,6 +34,9 @@ class ListStaff extends Component {
 
     return (
       <div className="container">
+        <div className='row'>
+          <SearchStaff />
+        </div>
         
         <div className="row">
           <StaffDetail staff={this.state.selectedStaff} />
