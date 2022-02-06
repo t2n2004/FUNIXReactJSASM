@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody, Input, Button } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody } from 'reactstrap';
 import SearchStaff from './SearchStaffComponent';
 import StaffDetail from './StaffDetailComponent';
 

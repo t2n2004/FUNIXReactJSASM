@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Media, Card,  CardText, CardBody, CardTitle, CardFooter } from 'reactstrap';
+import { Card,  CardText, CardBody, CardTitle, CardFooter } from 'reactstrap';
 import { STAFFS } from '../shared/staffs';
 
 class Salary extends Component {

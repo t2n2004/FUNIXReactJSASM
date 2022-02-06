@@ -9,7 +9,7 @@ class SearchStaff extends Component {
 
     this.state = {
       isModalOpen: false,
-      
+      searchStaff: "",
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -22,37 +22,38 @@ class SearchStaff extends Component {
     });
   }
 
-  handleSearchStaff(value) {
+  handleSearchStaff(event) {
     this.toggleModal();
-    const result = STAFFS.find((staffs) => staffs.name === value);
-    this.setState({ selectedStaff: value });
+    this.setState({ searchStaff: event.target.value });
+    const result = STAFFS.find(staffs => staffs.name === event.target.value )
+    console.log(result);
   }
 
   render() {
-    if (this.props.selectedStaff != null) {
-      return (
-        <div>
-          <Button outline onClick={this.toggleModal}>
-            <span className="fas fa-search fa-lg"></span>
-            Searching Staff
-          </Button>
+    return (
+      <div>
+        <Button outline onClick={this.toggleModal}>
+          <span className="fa fa-pencil fa-lg"></span>
+          Search a staff
+        </Button>
 
-          <Modal isOpen={this.state.isModalOpen}>
-            <ModalBody>
-              <Form onSubmit={(value) => this.handleSearchStaff(value)}>
-                <Label htmlFor="name" md={2}>
-                  Input a name:
-                  <input type="text" name="name" value={this.state.value} />
-                </Label>
-                <Input type="submit" value="Submit" />
-              </Form>
-            </ModalBody>
-          </Modal>
-        </div>
-      );
-    } else {
-      return <div>Không tìm thấy nhân viên</div>;
-    }
+        <Modal isOpen={this.state.isModalOpen}>
+          <ModalBody>
+            <Form>
+              <Label>Input a name: </Label>
+              <Input type="text"  />
+              <Button
+                type="button"
+                onClick={(value) => this.handleSearchStaff(value)}
+              >
+                Search
+              </Button>
+            </Form>
+          </ModalBody>
+        </Modal>
+
+      </div>
+    );
   }
 }
 
