@@ -14,6 +14,7 @@ class SearchStaff extends Component {
 
     this.toggleModal = this.toggleModal.bind(this);
     this.handleSearchStaff = this.handleSearchStaff.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
   }
 
   toggleModal() {
@@ -22,10 +23,17 @@ class SearchStaff extends Component {
     });
   }
 
+  handleChangeInput(event) {
+    this.setState({ searchStaff: event.target.value }); 
+  }
+
   handleSearchStaff(event) {
     this.toggleModal();
-    this.setState({ searchStaff: event.target.value });
-    const result = STAFFS.find(staffs => staffs.name === event.target.value )
+    
+    const result = STAFFS.filter(
+      (staff) =>
+        staff.name.toLowerCase().includes(this.state.searchStaff.toLowerCase()) 
+    );
     console.log(result);
   }
 
@@ -41,7 +49,11 @@ class SearchStaff extends Component {
           <ModalBody>
             <Form>
               <Label>Input a name: </Label>
-              <Input type="text"  />
+              <Input
+                type="text"
+                value={this.state.searchStaff} 
+                onChange={this.handleChangeInput} 
+              />
               <Button
                 type="button"
                 onClick={(value) => this.handleSearchStaff(value)}
@@ -53,6 +65,7 @@ class SearchStaff extends Component {
         </Modal>
 
       </div>
+    
     );
   }
 }

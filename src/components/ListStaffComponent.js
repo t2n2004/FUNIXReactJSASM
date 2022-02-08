@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { Card, CardImg, CardText, CardBody } from 'reactstrap';
-import SearchStaff from './SearchStaffComponent';
-import StaffDetail from './StaffDetailComponent';
+import React, { Component } from "react";
+import { Card, CardImg, CardText, CardBody } from "reactstrap";
+import SearchStaff from "./SearchStaffComponent";
+import StaffDetail from "./StaffDetailComponent";
 
 class ListStaff extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedStaff: null
+      selectedStaff: null,
     };
   }
 
@@ -25,25 +25,31 @@ class ListStaff extends Component {
           <Card onClick={() => this.onStaffSelect(staff)}>
             <CardImg src={staff.image} alt={staff.name} />
             <CardBody>
-              <CardText style={{textAlign: "center"}}>{staff.name}</CardText>
+              <CardText style={{ textAlign: "center" }}>{staff.name}</CardText>
             </CardBody>
           </Card>
         </div>
       );
     });
 
-    return (
-      <div className="container">
-        <div className='row'>
-          <SearchStaff />
+    if (this.state.selectedStaff != null) {
+      return (
+        <div className="container">
+          <div className="row">
+            <StaffDetail staff={this.state.selectedStaff} />
+          </div>
         </div>
-        
-        <div className="row">
-          <StaffDetail staff={this.state.selectedStaff} />
+      );
+    } else {
+      return (
+        <div className="container">
+          <div className="row">
+            <SearchStaff />
+          </div>
+          <div className="row">{list}</div>
         </div>
-        <div className="row">{list}</div>
-      </div>
-    );
+      );
+    }
   }
 }
 
