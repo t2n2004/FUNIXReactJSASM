@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Card, CardImg, CardText, CardBody, Input } from "reactstrap";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  Input,
+  Form,
+  Label,
+} from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
 
 class ListStaff extends Component {
@@ -9,7 +17,7 @@ class ListStaff extends Component {
       selectedStaff: null,
       staffs: this.props.staff,
       query: null,
-      order: "name"
+      order: "name",
     };
   }
 
@@ -21,15 +29,13 @@ class ListStaff extends Component {
   // hàm search theo name
   search(event) {
     console.log("đang search");
-    this.setState({ query: event.target.value });
-    this.filterStaffs();
+    this.setState({ query: event.target.value }, this.filterStaffs);
   }
 
   // hàm sort --> chọn theo name hoặc doB
   sort(event) {
     console.log("đang sort");
-    this.setState({ order: event.target.value });
-    this.filterStaffs();
+    this.setState({ order: event.target.value }, this.filterStaffs);
   }
 
   //hàm render ra newlist = list đã được sort và search, nếu ko có thì lấy list STAFFS
@@ -38,18 +44,22 @@ class ListStaff extends Component {
 
     // filter staff --> lấy list đã được search, nếu ko có thì lấy STAFFS ban đầu
     if (this.state.query) {
-       newList = this.props.staff.filter((staff) => {
-        return staff.name.toLowerCase().includes(this.state.query.toLowerCase());
+      newList = this.props.staff.filter((staff) => {
+        return staff.name
+          .toLowerCase()
+          .includes(this.state.query.toLowerCase());
       });
     } else {
       newList = this.props.staff;
     }
 
     // lấy ds đã search để sort tiếp theo thứ tự của order
-    newList = newList.sort((a, b) => (a[this.state.order] > b[this.state.order]) ? 1 : -1);
+    newList = newList.sort((a, b) =>
+      a[this.state.order] > b[this.state.order] ? 1 : -1
+    );
 
     // set lại state cho danh sách staffs
-    this.setState({ staffs: newList});
+    this.setState({ staffs: newList });
   }
 
   renderSelected() {
@@ -82,37 +92,42 @@ class ListStaff extends Component {
     return (
       <div className="container">
         <div className="row">
-          <Input
-            type="text"
-            value={this.state.query}
-            onChange={(event) => this.search(event)}
-          />
+          <Form inline>
+            <Label> Search a staff: </Label>
+            <Input
+              type="text"
+              value={this.state.query}
+              onChange={(event) => this.search(event)}
+            />
+          </Form>
 
-          <Input
-            type={"select"}
-            size="1"
-            value={this.state.order}
-            onChange={(event) => this.sort(event)}
-          >
-            <option value={"name"}>Name</option>
-            <option value={"doB"}>doB</option>
-          </Input>
+          <Form inline style={{ margin: "auto" }}>
+            <Label> Sort by: </Label>
+            <Input
+              type={"select"}
+              size="1"
+              value={this.state.order}
+              onChange={(event) => this.sort(event)}
+            >
+              <option value={"name"}>Name</option>
+              <option value={"doB"}>doB</option>
+              <option value={"salaryScale"}>salaryScale</option>
+              <option value={"startDate"}>startDate</option>
+            </Input>
+          </Form>
         </div>
-        
-        {/* hiển thị danh sách */}
-        <div className="row">{list}</div> 
 
+        {/* hiển thị danh sách */}
+        <div className="row">{list}</div>
       </div>
     );
   }
 
   render() {
     if (this.state.selectedStaff != null) {
-
       /* trả về chi tiết nhân viên đã chọn */
       return this.renderSelected();
     } else {
-
       /* trả về list danh sách */
       return this.renderList();
     }
