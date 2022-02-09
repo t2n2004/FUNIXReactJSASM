@@ -1,42 +1,92 @@
-import React, { Component } from 'react';
-import { Card,  CardText, CardBody, CardTitle, CardFooter } from 'reactstrap';
-import { STAFFS } from '../shared/staffs';
+import React, { Component } from "react";
+import {
+  Card,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardFooter,
+  Input,
+  Form,
+  Label,
+} from "reactstrap";
+import { STAFFS } from "../shared/staffs";
 
 class Salary extends Component {
   constructor(props) {
     super(props);
     this.state = {
       staffs: STAFFS,
+      order: "id",
     };
   }
 
-  render() {
+  sort(event) {
+    this.setState({ order: event.target.value });
+  }
+
+  renderSalary() {
     const basicSalary = 3000000;
     const overTimeSalary = 200000;
-    const salary = this.state.staffs.map((staff) => {
+
+    //tạo ra 1 list mới từ list cũ + property salary
+    let newSalaryList = this.state.staffs.map((staff) => {
+      return {
+        ...staff,
+        salary: Math.round(
+          staff.salaryScale * basicSalary + staff.overTime * overTimeSalary
+        ),
+      };
+    });
+
+    // sort theo order
+    newSalaryList = newSalaryList.sort((a, b) =>
+      a[this.state.order] > b[this.state.order] ? 1 : -1
+    );
+
+    //render danh sách bảng lương
+    const salary = newSalaryList.map((staff) => {
       return (
         <div
           key={`staff-${staff.id}`}
-          className={`col-12 col-sm-6 col-md-4 my-1`}
+          className={`col-12 col-sm-6 col-md-4 my-2`}
         >
-            <Card>
-                <CardTitle>{staff.name}</CardTitle>
-                <CardBody>
-                    <CardText>Mã nhân viên: {staff.id}</CardText>
-                    <CardText>Hệ số lương:  {staff.salaryScale}</CardText>
-                    <CardText>Số giờ làm thêm: {staff.overTime}</CardText>
-                </CardBody>
-                <CardFooter>Lương: {(staff.salaryScale * basicSalary) + (staff.overTime * overTimeSalary)}</CardFooter>
-            </Card>
+          <Card>
+            <CardTitle>{staff.name}</CardTitle>
+            <CardBody>
+              <CardText>Mã nhân viên: {staff.id}</CardText>
+              <CardText>Hệ số lương: {staff.salaryScale}</CardText>
+              <CardText>Số giờ làm thêm: {staff.overTime}</CardText>
+            </CardBody>
+            <CardFooter>Lương: {staff.salary}</CardFooter>
+          </Card>
         </div>
       );
     });
 
     return (
       <div className="container">
+        <div className="row">
+          <Form inline style={{ margin: "auto" }}>
+            <Label> Sắp xếp theo: </Label>
+            <Input
+              type={"select"}
+              size="1"
+              value={this.state.order}
+              onChange={(event) => this.sort(event)}
+            >
+              <option value={"id"}>Mã nhân viên</option>
+              <option value={"salary"}>Mức lương</option>
+              <option value={"salaryScale"}>Hệ số lương</option>
+            </Input>
+          </Form>
+        </div>
         <div className="row">{salary}</div>
       </div>
     );
+  }
+
+  render() {
+    return this.renderSalary();
   }
 }
 

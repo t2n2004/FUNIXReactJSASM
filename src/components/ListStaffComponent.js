@@ -28,13 +28,11 @@ class ListStaff extends Component {
 
   // hàm search theo name
   search(event) {
-    console.log("đang search");
     this.setState({ query: event.target.value }, this.filterStaffs);
   }
 
   // hàm sort --> chọn theo name hoặc doB
   sort(event) {
-    console.log("đang sort");
     this.setState({ order: event.target.value }, this.filterStaffs);
   }
 
@@ -92,8 +90,8 @@ class ListStaff extends Component {
     return (
       <div className="container">
         <div className="row">
-          <Form inline>
-            <Label> Search a staff: </Label>
+          <Form inline style={{ margin: "1em auto 1em" }}>
+            <Label> Tìm tên nhân viên: </Label>
             <Input
               type="text"
               value={this.state.query}
@@ -101,18 +99,17 @@ class ListStaff extends Component {
             />
           </Form>
 
-          <Form inline style={{ margin: "auto" }}>
-            <Label> Sort by: </Label>
+          <Form inline style={{ margin: "1em auto 1em" }}>
+            <Label> Sắp xếp theo: </Label>
             <Input
               type={"select"}
               size="1"
               value={this.state.order}
               onChange={(event) => this.sort(event)}
             >
-              <option value={"name"}>Name</option>
-              <option value={"doB"}>doB</option>
-              <option value={"salaryScale"}>salaryScale</option>
-              <option value={"startDate"}>startDate</option>
+              <option value={"name"}>Tên</option>
+              <option value={"doB"}>Ngày sinh</option>
+              <option value={"startDate"}>Ngày vào công ty</option>
             </Input>
           </Form>
         </div>
