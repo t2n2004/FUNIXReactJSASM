@@ -1,1 +1,31 @@
-<mxfile host="app.diagrams.net" modified="2022-02-10T15:02:26.649Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36" version="16.5.5" etag="T45aYFP30_DM5JuEEBSn" type="github"><diagram id="2fv7exrXZliIuHTOwrct">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-02-10T16:04:50.724Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36" etag="JuG58E-N7nzQgwplEQNK" version="16.5.5" type="github">
+  <diagram id="2fv7exrXZliIuHTOwrct" name="Page-1">
+    <mxGraphModel dx="1080" dy="1825" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-1" value="&lt;h1&gt;Giới thiệu dự án ASM2 - Thiết kế Ứng dụng Quản lý nhân viên&lt;/h1&gt;&lt;p&gt;Gồm 3 màn hình chính: 1 Danh sách nhân viên&amp;nbsp; &amp;nbsp; &amp;nbsp;2 Danh sách phòng ban&amp;nbsp; &amp;nbsp; 3 Bảng lương&lt;/p&gt;&lt;p&gt;1. Danh sách nhân viên: Màn hình 1 - Danh sách toàn bộ nhân viên&amp;nbsp; &amp;nbsp; Màn hình 2 - Thông tin chi tiết mỗi nhân viên&lt;/p&gt;&lt;p&gt;Sắp xếp theo thứ tự định sắn&lt;/p&gt;&lt;p&gt;Tìm kiếm theo tên nhân viên&lt;/p&gt;&lt;p&gt;2. Danh sách phòng ban: Hiện thị danh sách các phòng ban + thông tin số lượng nhân viên&lt;/p&gt;&lt;p&gt;3. Bảng lương&lt;/p&gt;&lt;p&gt;Tính lương cho mỗi nhân viên&lt;/p&gt;&lt;p&gt;Hiện thị danh sách bảng lương của tất cả nhân viên&lt;/p&gt;&lt;p&gt;Sắp xếp theo thứ tự định sẵn&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="-1080" width="810" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="-770" width="670" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-4" value="Header" style="text;html=1;strokeColor=#d79b00;fillColor=#ffe6cc;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="590" y="-760" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-5" value="Logo" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="60" y="-745" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-6" value="Nhân viên" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="-745" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-7" value="Phòng ban" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="-745" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="FX9XI3rINHUwliLvJ2tx-8" value="Bảng lương" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="-745" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
