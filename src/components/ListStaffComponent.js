@@ -6,9 +6,11 @@ import {
   CardBody,
   Input,
   Form,
+  FormGroup,
   Label,
 } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
+import StaffForm from "./StaffFormComponent";
 
 class ListStaff extends Component {
   constructor(props) {
@@ -90,13 +92,20 @@ class ListStaff extends Component {
     return (
       <div className="container">
         <div className="row">
-          <Form inline style={{ margin: "1em auto 1em" }}>
-            <Label> Tìm tên nhân viên: </Label>
-            <Input
-              type="text"
-              value={this.state.query}
-              onChange={(event) => this.search(event)}
-            />
+          <Form
+            inline
+            style={{ margin: "1em auto 1em" }}
+            onSubmit={this.search(event)}
+          >
+            <FormGroup>
+              <Label htmlFor="query">Tìm tên nhân viên:</Label>
+              <Input
+                type="text"
+                id="query"
+                name="query"
+                innerRef={(input) => (this.query = input)}
+              ></Input>
+            </FormGroup>
           </Form>
 
           <Form inline style={{ margin: "1em auto 1em" }}>
@@ -113,6 +122,10 @@ class ListStaff extends Component {
             </Input>
           </Form>
         </div>
+
+        <Form inline style={{ margin: "1em auto 1em" }}>
+          <StaffForm />
+        </Form>
 
         {/* hiển thị danh sách */}
         <div className="row">{list}</div>

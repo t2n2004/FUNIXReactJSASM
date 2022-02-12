@@ -1,0 +1,208 @@
+import React, { Component } from "react";
+import {
+    Button,
+    Modal,
+    ModalBody,
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Row,
+    Col,
+} from "reactstrap";
+import { Control, LocalForm, Errors } from "react-redux-form";
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !val || val.length <= len;
+const minLength = (len) => (val) => val && val.length >= len;
+
+class StaffForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isModalOpen: false,
+    };
+
+    this.toggleModal = this.toggleModal.bind(this);
+    this.handleAddComment = this.handleAddStaff.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
+  }
+
+  handleAddStaff(event) {
+    // event.preventDefault();
+    this.toggleModal();
+    const message = "Current State is: " + JSON.stringify(event);
+
+    setTimeout(() => {
+      alert(message);
+    }, 500);
+  }
+
+  render() {
+    return (
+      <div>
+        <Button outline onClick={this.toggleModal}>
+          <span className="fa fa-pencil fa-lg"></span>
+          Thêm nhân viên
+        </Button>
+
+        <Modal isOpen={this.state.isModalOpen}>
+          <ModalBody>
+            <LocalForm onSubmit={(values) => this.handleAddStaff(values)}>
+
+            <Row className="form-group">
+                <Label htmlFor="name" md={2}>
+                  Tên nhân viên
+                </Label>
+                <Col md={10}>
+                  <Control.text
+                    model=".name"
+                    id="name"
+                    name="name"
+                    placeholder="Author"
+                    className="form-control"
+                    validators={{
+                    required,
+                      minLength: minLength(3),
+                      maxLength: maxLength(15),
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".name"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập",
+                      minLength: "Must be greater than 2 characters",
+                      maxLength: "Must be 15 characters or less",
+                    }}
+                  />
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Label htmlFor="doB" md={2}>
+                  Ngày sinh
+                </Label>
+                <Col md={10}>
+                  <Control.textarea
+                    type="date"
+                    model=".doB"
+                    id="doB"
+                    name="doB"
+                    rows="6"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Label htmlFor="startDate" md={2}>
+                  Ngày bắt đầu
+                </Label>
+                <Col md={10}>
+                  <Control.textarea
+                    type="date"
+                    model=".startDate"
+                    id="startDate"
+                    name="startDate"
+                    rows="6"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Label htmlFor="department" md={2}>
+                  Phòng ban
+                </Label>
+                <Col md={10}>
+                  <Control.select
+                    model=".department"
+                    id="department"
+                    name="department"
+                    placeholder="Phòng ban"
+                    className="form-control"
+                  >
+                    <option value={"1"}>Sale</option>
+                    <option value={"2"}>HR</option>
+                    <option value={"3"}>Marketing</option>
+                    <option value={"4"}>IT</option>
+                    <option value={"5"}>Finance</option>
+                  </Control.select>
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Label htmlFor="salaryScale" md={2}>
+                  Hệ số lương
+                </Label>
+                <Col md={10}>
+                  <Control.select
+                    model=".salaryScale"
+                    id="salaryScale"
+                    name="salaryScale"
+                    placeholder="Phòng ban"
+                    className="form-control"
+                  >
+                    <option value={"1"}>1.0</option>
+                    <option value={"2"}>1.1</option>
+                    <option value={"3"}>1.2</option>
+                    <option value={"4"}>1.3</option>
+                    <option value={"5"}>1.4</option>
+                  </Control.select>
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Label htmlFor="annualLeave" md={2}>
+                  Số ngày nghỉ còn lại
+                </Label>
+                <Col md={10}>
+                  <Control.textarea
+                    model=".annualLeave"
+                    id="annualLeave"
+                    name="annualLeave"
+                    rows="6"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Label htmlFor="overTime" md={2}>
+                  Số ngày làm thêm
+                </Label>
+                <Col md={10}>
+                  <Control.textarea
+                    model=".overTime"
+                    id="overTime"
+                    name="overTime"
+                    rows="6"
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="form-group">
+                <Col md={{ size: 10, offset: 2 }}>
+                  <Button type="submit" value="submit" color="primary">
+                    Thêm
+                  </Button>
+                </Col>
+              </Row>
+            </LocalForm>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
+}
+
+export default StaffForm;
