@@ -65,7 +65,7 @@ class StaffForm extends Component {
                     model=".name"
                     id="name"
                     name="name"
-                    placeholder="Author"
+                    placeholder="Tên nhân viên"
                     className="form-control"
                     validators={{
                     required,
@@ -148,7 +148,7 @@ class StaffForm extends Component {
                     model=".salaryScale"
                     id="salaryScale"
                     name="salaryScale"
-                    placeholder="Phòng ban"
+                    placeholder="Hệ số lương"
                     className="form-control"
                   >
                     <option value={"1"}>1.0</option>

@@ -8,6 +8,7 @@ import {
   Form,
   FormGroup,
   Label,
+  
 } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
 import StaffForm from "./StaffFormComponent";
@@ -95,7 +96,7 @@ class ListStaff extends Component {
           <Form
             inline
             style={{ margin: "1em auto 1em" }}
-            onSubmit={this.search(event)}
+            onSubmit={this.search}
           >
             <FormGroup>
               <Label htmlFor="query">Tìm tên nhân viên:</Label>
@@ -109,17 +110,19 @@ class ListStaff extends Component {
           </Form>
 
           <Form inline style={{ margin: "1em auto 1em" }}>
-            <Label> Sắp xếp theo: </Label>
-            <Input
-              type={"select"}
-              size="1"
-              value={this.state.order}
-              onChange={(event) => this.sort(event)}
-            >
-              <option value={"name"}>Tên</option>
-              <option value={"doB"}>Ngày sinh</option>
-              <option value={"startDate"}>Ngày vào công ty</option>
-            </Input>
+            <FormGroup>
+              <Label> Sắp xếp theo: </Label>
+              <Input
+                type={"select"}
+                size="1"
+                value={this.state.order}
+                onChange={(event) => this.sort(event)}
+              >
+                <option value={"name"}>Tên</option>
+                <option value={"doB"}>Ngày sinh</option>
+                <option value={"startDate"}>Ngày vào công ty</option>
+              </Input>
+            </FormGroup>
           </Form>
         </div>
 
