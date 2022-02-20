@@ -11,7 +11,7 @@ import {
   
 } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
-import StaffForm from "./StaffFormComponent";
+import StaffForm from "./StaffFormComponent";  
 
 class ListStaff extends Component {
   constructor(props) {
@@ -96,7 +96,6 @@ class ListStaff extends Component {
           <Form
             inline
             style={{ margin: "1em auto 1em" }}
-            onSubmit={this.search}
           >
             <FormGroup>
               <Label htmlFor="query">Tìm tên nhân viên:</Label>
@@ -105,6 +104,7 @@ class ListStaff extends Component {
                 id="query"
                 name="query"
                 innerRef={(input) => (this.query = input)}
+                onChange={(event) => this.search(event)}
               ></Input>
             </FormGroup>
           </Form>

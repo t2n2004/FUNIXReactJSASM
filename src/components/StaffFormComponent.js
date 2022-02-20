@@ -3,9 +3,6 @@ import {
     Button,
     Modal,
     ModalBody,
-    Form,
-    FormGroup,
-    Input,
     Label,
     Row,
     Col,
@@ -57,10 +54,10 @@ class StaffForm extends Component {
             <LocalForm onSubmit={(values) => this.handleAddStaff(values)}>
 
             <Row className="form-group">
-                <Label htmlFor="name" md={2}>
+                <Label htmlFor="name" md={5}>
                   Tên nhân viên
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.text
                     model=".name"
                     id="name"
@@ -87,42 +84,40 @@ class StaffForm extends Component {
               </Row>
 
               <Row className="form-group">
-                <Label htmlFor="doB" md={2}>
+                <Label htmlFor="doB" md={5}>
                   Ngày sinh
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.textarea
-                    type="date"
+                    type="time"
                     model=".doB"
                     id="doB"
                     name="doB"
-                    rows="6"
                     className="form-control"
                   />
                 </Col>
               </Row>
 
               <Row className="form-group">
-                <Label htmlFor="startDate" md={2}>
+                <Label htmlFor="startDate" md={5}>
                   Ngày bắt đầu
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.textarea
-                    type="date"
+                    type="time"
                     model=".startDate"
                     id="startDate"
                     name="startDate"
-                    rows="6"
                     className="form-control"
                   />
                 </Col>
               </Row>
 
               <Row className="form-group">
-                <Label htmlFor="department" md={2}>
+                <Label htmlFor="department" md={5}>
                   Phòng ban
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.select
                     model=".department"
                     id="department"
@@ -140,10 +135,10 @@ class StaffForm extends Component {
               </Row>
 
               <Row className="form-group">
-                <Label htmlFor="salaryScale" md={2}>
+                <Label htmlFor="salaryScale" md={5}>
                   Hệ số lương
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.select
                     model=".salaryScale"
                     id="salaryScale"
@@ -161,30 +156,28 @@ class StaffForm extends Component {
               </Row>
 
               <Row className="form-group">
-                <Label htmlFor="annualLeave" md={2}>
+                <Label htmlFor="annualLeave" md={5}>
                   Số ngày nghỉ còn lại
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.textarea
                     model=".annualLeave"
                     id="annualLeave"
                     name="annualLeave"
-                    rows="6"
                     className="form-control"
                   />
                 </Col>
               </Row>
 
               <Row className="form-group">
-                <Label htmlFor="overTime" md={2}>
+                <Label htmlFor="overTime" md={5}>
                   Số ngày làm thêm
                 </Label>
-                <Col md={10}>
+                <Col md={7}>
                   <Control.textarea
                     model=".overTime"
                     id="overTime"
                     name="overTime"
-                    rows="6"
                     className="form-control"
                   />
                 </Col>
