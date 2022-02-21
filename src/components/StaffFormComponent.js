@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import {
-    Button,
-    Modal,
-    ModalBody,
-    Label,
-    Row,
-    Col,
-} from "reactstrap";
+import { Button, Modal, ModalBody, Label, Row, Col } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !val || val.length <= len;
-const minLength = (len) => (val) => val && val.length >= len;
+// const maxLength = (len) => (val) => !val || val.length <= len;
+// const minLength = (len) => (val) => val && val.length >= len;
 
 class StaffForm extends Component {
   constructor(props) {
@@ -34,11 +27,10 @@ class StaffForm extends Component {
   handleAddStaff(event) {
     // event.preventDefault();
     this.toggleModal();
-    const message = "Current State is: " + JSON.stringify(event);
+    console.log(event);
+    const newStaff = event;
 
-    setTimeout(() => {
-      alert(message);
-    }, 500);
+    this.props.onAddStaff(newStaff);
   }
 
   render() {
@@ -52,8 +44,7 @@ class StaffForm extends Component {
         <Modal isOpen={this.state.isModalOpen}>
           <ModalBody>
             <LocalForm onSubmit={(values) => this.handleAddStaff(values)}>
-
-            <Row className="form-group">
+              <Row className="form-group">
                 <Label htmlFor="name" md={5}>
                   Tên nhân viên
                 </Label>
@@ -65,9 +56,7 @@ class StaffForm extends Component {
                     placeholder="Tên nhân viên"
                     className="form-control"
                     validators={{
-                    required,
-                      minLength: minLength(3),
-                      maxLength: maxLength(15),
+                      required,
                     }}
                   />
                   <Errors
@@ -76,8 +65,6 @@ class StaffForm extends Component {
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập",
-                      minLength: "Must be greater than 2 characters",
-                      maxLength: "Must be 15 characters or less",
                     }}
                   />
                 </Col>
@@ -88,12 +75,24 @@ class StaffForm extends Component {
                   Ngày sinh
                 </Label>
                 <Col md={7}>
-                  <Control.textarea
-                    type="time"
+                  <Control.text
+                    type="date"
                     model=".doB"
                     id="doB"
                     name="doB"
                     className="form-control"
+                    value={this.state.tenState}
+                    validators={{
+                      required,
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".name"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập",
+                    }}
                   />
                 </Col>
               </Row>
@@ -103,12 +102,24 @@ class StaffForm extends Component {
                   Ngày bắt đầu
                 </Label>
                 <Col md={7}>
-                  <Control.textarea
-                    type="time"
+                  <Control.text
+                    type="date"
                     model=".startDate"
                     id="startDate"
                     name="startDate"
                     className="form-control"
+                    value={this.state.tenState}
+                    validators={{
+                      required,
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".name"
+                    show="touched"
+                    messages={{
+                      required: "Yêu cầu nhập",
+                    }}
                   />
                 </Col>
               </Row>
@@ -119,17 +130,18 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.select
+                    defaultValue={"Dept01"}
                     model=".department"
                     id="department"
                     name="department"
                     placeholder="Phòng ban"
                     className="form-control"
                   >
-                    <option value={"1"}>Sale</option>
-                    <option value={"2"}>HR</option>
-                    <option value={"3"}>Marketing</option>
-                    <option value={"4"}>IT</option>
-                    <option value={"5"}>Finance</option>
+                    <option value={"Dept01"}>Sale</option>
+                    <option value={"Dept02"}>HR</option>
+                    <option value={"Dept03"}>Marketing</option>
+                    <option value={"Dept04"}>IT</option>
+                    <option value={"Dept05"}>Finance</option>
                   </Control.select>
                 </Col>
               </Row>
@@ -140,17 +152,18 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.select
+                    defaultValue={"1.0"}
                     model=".salaryScale"
                     id="salaryScale"
                     name="salaryScale"
                     placeholder="Hệ số lương"
                     className="form-control"
                   >
-                    <option value={"1"}>1.0</option>
-                    <option value={"2"}>1.1</option>
-                    <option value={"3"}>1.2</option>
-                    <option value={"4"}>1.3</option>
-                    <option value={"5"}>1.4</option>
+                    <option value={"1.0"}>1.0</option>
+                    <option value={"1.1"}>1.1</option>
+                    <option value={"1.2"}>1.2</option>
+                    <option value={"1.3"}>1.3</option>
+                    <option value={"1.4"}>1.4</option>
                   </Control.select>
                 </Col>
               </Row>
@@ -160,7 +173,8 @@ class StaffForm extends Component {
                   Số ngày nghỉ còn lại
                 </Label>
                 <Col md={7}>
-                  <Control.textarea
+                  <Control.text
+                    defaultValue={"0"}
                     model=".annualLeave"
                     id="annualLeave"
                     name="annualLeave"
@@ -174,7 +188,8 @@ class StaffForm extends Component {
                   Số ngày làm thêm
                 </Label>
                 <Col md={7}>
-                  <Control.textarea
+                  <Control.text
+                    defaultValue={"0"}
                     model=".overTime"
                     id="overTime"
                     name="overTime"
@@ -184,7 +199,7 @@ class StaffForm extends Component {
               </Row>
 
               <Row className="form-group">
-                <Col md={{ size: 10, offset: 2 }}>
+                <Col md={{ size: 10 }}>
                   <Button type="submit" value="submit" color="primary">
                     Thêm
                   </Button>

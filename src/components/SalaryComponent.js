@@ -9,13 +9,12 @@ import {
   Form,
   Label,
 } from "reactstrap";
-import { STAFFS } from "../shared/staffs";
 
 class Salary extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffs: STAFFS,
+      staffs: this.props.staffs,
       order: "id",
     };
   }

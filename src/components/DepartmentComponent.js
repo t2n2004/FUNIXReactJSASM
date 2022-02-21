@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Card,  CardText, CardBody, CardTitle } from 'reactstrap';
-import { DEPARTMENTS } from '../shared/staffs';
 
 class Department extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        departments: DEPARTMENTS
+        departments: this.props.departments
       };
   }
 

@@ -11,14 +11,13 @@ import {
   
 } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
-import StaffForm from "./StaffFormComponent";  
 
 class ListStaff extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedStaff: null,
-      staffs: this.props.staff,
+      staffs: this.props.staffs,
       query: null,
       order: "name",
     };
@@ -45,13 +44,13 @@ class ListStaff extends Component {
 
     // filter staff --> lấy list đã được search, nếu ko có thì lấy STAFFS ban đầu
     if (this.state.query) {
-      newList = this.props.staff.filter((staff) => {
+      newList = this.props.staffs.filter((staff) => {
         return staff.name
           .toLowerCase()
           .includes(this.state.query.toLowerCase());
       });
     } else {
-      newList = this.props.staff;
+      newList = this.props.staffs;
     }
 
     // lấy ds đã search để sort tiếp theo thứ tự của order
@@ -126,9 +125,7 @@ class ListStaff extends Component {
           </Form>
         </div>
 
-        <Form inline style={{ margin: "1em auto 1em" }}>
-          <StaffForm />
-        </Form>
+        
 
         {/* hiển thị danh sách */}
         <div className="row">{list}</div>
