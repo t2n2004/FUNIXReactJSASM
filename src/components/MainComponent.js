@@ -49,9 +49,8 @@ class Main extends Component {
     const StaffPage = () => {
       return (
         <div>
-          <StaffForm onAddStaff={this.addStaff} />
           <ListStaff staffs={this.state.staffs} />
-          
+          <StaffForm onAddStaff={this.addStaff} />
         </div>
       );
     };

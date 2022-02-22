@@ -36,7 +36,7 @@ class StaffForm extends Component {
   render() {
     return (
       <div>
-        <Button outline onClick={this.toggleModal}>
+        <Button className="mx-auto d-flex" outline onClick={this.toggleModal}>
           <span className="fa fa-pencil fa-lg"></span>
           Thêm nhân viên
         </Button>
@@ -88,7 +88,7 @@ class StaffForm extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".name"
+                    model=".doB"
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập",
@@ -115,7 +115,7 @@ class StaffForm extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".name"
+                    model=".startDate"
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập",
