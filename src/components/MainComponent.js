@@ -3,23 +3,32 @@ import ListStaff from "./ListStaffComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import { STAFFS, DEPARTMENTS } from "../shared/staffs";
-import { Route, Switch, Redirect } from "react-router";
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 import Department from "./DepartmentComponent";
 import Salary from "./SalaryComponent";
 import StaffForm from "./StaffFormComponent";
+
+
+const mapStateToProps = state => {
+  return {
+    staffs: state.staffs,
+    departments: state.departments,
+  }
+}
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      staffs: STAFFS,
-      departments: DEPARTMENTS
+      staffs: STAFFS, // chưa sửa
+      departments: DEPARTMENTS //chưa sửa
     };
 
-    this.addStaff = this.addStaff.bind(this);
+    this.addStaff = this.addStaff.bind(this); //chưa sửa
   }
 
-  addStaff(newStaff) {
+  addStaff(newStaff) { //chưa sửa
 
     // update danh sách staff
     const staff = {
@@ -49,7 +58,7 @@ class Main extends Component {
     const StaffPage = () => {
       return (
         <div>
-          <ListStaff staffs={this.state.staffs} />
+          <ListStaff staffs={this.props.staffs} />
           <StaffForm onAddStaff={this.addStaff} />
         </div>
       );
@@ -60,8 +69,8 @@ class Main extends Component {
         <Header />
         <Switch>
           <Route path="/staff" component={StaffPage} />
-          <Route exact path="/department" component={() => <Department departments={this.state.departments} />} />
-          <Route exact path="/salary" component={() => <Salary staffs={this.state.staffs} />} />
+          <Route exact path="/department" component={() => <Department departments={this.props.departments} />} />
+          <Route exact path="/salary" component={() => <Salary staffs={this.props.staffs} />} />
           <Redirect to="/staff" />
         </Switch>
         <Footer />
@@ -70,4 +79,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
