@@ -3,6 +3,13 @@ import { Button, Modal, ModalBody, Label, Row, Col } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length;
+const validBday = (val) => {
+  let thisYear = new Date().getFullYear();
+  let bYear = new Date(val).getFullYear();
+  let age = thisYear - bYear;
+  return age >= 18;
+};
+
 // const maxLength = (len) => (val) => !val || val.length <= len;
 // const minLength = (len) => (val) => val && val.length >= len;
 
@@ -27,9 +34,7 @@ class StaffForm extends Component {
   handleAddStaff(event) {
     // event.preventDefault();
     this.toggleModal();
-    console.log(event);
     const newStaff = event;
-
     this.props.onAddStaff(newStaff);
   }
 
@@ -84,6 +89,7 @@ class StaffForm extends Component {
                     value={this.state.tenState}
                     validators={{
                       required,
+                      validBday,
                     }}
                   />
                   <Errors
@@ -92,6 +98,7 @@ class StaffForm extends Component {
                     show="touched"
                     messages={{
                       required: "Yêu cầu nhập",
+                      validBday: "Chưa đủ 18 tuổi",
                     }}
                   />
                 </Col>
