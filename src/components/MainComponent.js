@@ -8,7 +8,6 @@ import Department from "./DepartmentComponent";
 import Salary from "./SalaryComponent";
 import StaffForm from "./StaffFormComponent";
 
-
 const mapStateToProps = state => {
   return {
     staffs: state.staffs,
@@ -21,10 +20,10 @@ class Main extends Component {
     super(props);
 
 
-    this.addStaff = this.addStaff.bind(this); //chưa sửa
+    this.addStaff = this.addStaff.bind(this);
   }
 
-  addStaff(newStaff) { //chưa sửa
+  addStaff(newStaff) { 
 
     // update danh sách staff
     const staff = {
@@ -34,7 +33,7 @@ class Main extends Component {
       image: '/assets/images/alberto.png'
     }
     this.setState({ 
-      staffs: this.props.staffs.concat([staff])
+      staffs: this.props.staffs.push(staff)
     });
 
     // update numberOfStaff trong phòng ban
