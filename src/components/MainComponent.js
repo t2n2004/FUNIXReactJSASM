@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ListStaff from "./ListStaffComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
-import { STAFFS, DEPARTMENTS } from "../shared/staffs";
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import Department from "./DepartmentComponent";
@@ -20,10 +19,7 @@ const mapStateToProps = state => {
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      staffs: STAFFS, // chưa sửa
-      departments: DEPARTMENTS //chưa sửa
-    };
+
 
     this.addStaff = this.addStaff.bind(this); //chưa sửa
   }
@@ -33,16 +29,16 @@ class Main extends Component {
     // update danh sách staff
     const staff = {
       ...newStaff,
-      id: this.state.staffs.length,
-      department: DEPARTMENTS.find(dpm =>  dpm.id == newStaff.department),
+      id: this.props.staffs.length,
+      department: this.props.departments.find(dpm =>  dpm.id == newStaff.department),
       image: '/assets/images/alberto.png'
     }
     this.setState({ 
-      staffs: this.state.staffs.concat([staff])
+      staffs: this.props.staffs.concat([staff])
     });
 
     // update numberOfStaff trong phòng ban
-    const departments = this.state.departments;
+    const departments = this.props.departments;
     departments.forEach((item)=> { 
       if (item.id == newStaff.department) {
         item.numberOfStaff += 1;

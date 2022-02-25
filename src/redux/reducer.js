@@ -3,7 +3,7 @@ import { STAFFS, DEPARTMENTS } from '../shared/staffs';
 
 export const initialState = {
     staffs: STAFFS,
-    department: DEPARTMENTS,
+    departments: DEPARTMENTS,
 }
 
 export const Reducer = (state = initialState, action) => {
