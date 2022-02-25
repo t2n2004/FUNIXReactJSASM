@@ -8,7 +8,6 @@ import {
   Form,
   FormGroup,
   Label,
-  
 } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
 
