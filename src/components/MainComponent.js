@@ -8,8 +8,6 @@ import Department from "./DepartmentComponent";
 import Salary from "./SalaryComponent";
 import StaffForm from "./StaffFormComponent";
 
-
-
 class Main extends Component {
   constructor(props) {
     super(props);
