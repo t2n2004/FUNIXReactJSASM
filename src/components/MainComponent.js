@@ -26,11 +26,11 @@ class Main extends Component {
     const staff = {
       ...newStaff,
       id: this.state.staffs.length,
-      department: this.state.departments.find(dpm =>  dpm.id == newStaff.department),
+      department: this.state.departments.find(item =>  item.id == newStaff.department),
       image: '/assets/images/alberto.png'
     }
     this.setState({ 
-      staffs: this.state.staffs.concat([staff])
+      staffs: this.state.staffs.concat(staff)
     });
 
     // update numberOfStaff trong phòng ban

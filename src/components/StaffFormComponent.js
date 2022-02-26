@@ -20,10 +20,10 @@ class StaffForm extends Component {
       name: "",
       doB: "",
       startDate: "",
-      department: "",
-      salaryScale: "",
-      annualLeave: "",
-      overTime: "",
+      department: "Dept01",
+      salaryScale: "1.0",
+      annualLeave: "0",
+      overTime: "0",
       touched: {
         name: false,
         doB: false,
@@ -44,11 +44,11 @@ class StaffForm extends Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value =  target.value;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
-      [name]: value,
+      [name]: value
     });
   }
 
@@ -81,11 +81,18 @@ class StaffForm extends Component {
 
   // hàm add newStaff
   handleAddStaff(event) {
+    event.preventDefault();
+    
+    if (!this.state.name || !this.state.doB || !this.state.startDate ) {
+      return ;
+    } else if (new Date().getFullYear() - new Date(this.state.doB).getFullYear() < 18) {
+      return ;
+    };
+
     this.toggleModal();
     const newStaff = this.state;
-
     this.props.onAddStaff(newStaff);
-    event.preventDefault();
+    
   }
 
   render() {
@@ -176,10 +183,9 @@ class StaffForm extends Component {
                     name="department"
                     placeholder="Phòng ban"
                     value={this.state.department}
-                    defaultValue={"Dept01"}
                     onChange={this.handleInputChange}
                   >
-                    <option value={"Dept01"}>Sale</option>
+                    <option value={"Dept01"} selected>Sale</option>
                     <option value={"Dept02"}>HR</option>
                     <option value={"Dept03"}>Marketing</option>
                     <option value={"Dept04"}>IT</option>
@@ -200,10 +206,9 @@ class StaffForm extends Component {
                     name="salaryScale"
                     placeholder="hệ số lương"
                     value={this.state.salaryScale}
-                    defaultValue={"1.0"}
                     onChange={this.handleInputChange}
                   >
-                    <option value={"1.0"}>1.0</option>
+                    <option value={"1.0"} >1.0</option>
                     <option value={"1.1"}>1.1</option>
                     <option value={"1.2"}>1.2</option>
                     <option value={"1.3"}>1.3</option>
