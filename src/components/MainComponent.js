@@ -26,7 +26,7 @@ class Main extends Component {
     const staff = {
       ...newStaff,
       id: this.state.staffs.length,
-      department: DEPARTMENTS.find(dpm =>  dpm.id == newStaff.department),
+      department: this.state.departments.find(dpm =>  dpm.id == newStaff.department),
       image: '/assets/images/alberto.png'
     }
     this.setState({ 

@@ -82,7 +82,6 @@ class StaffForm extends Component {
   // hàm add newStaff
   handleAddStaff(event) {
     this.toggleModal();
-
     const newStaff = this.state;
 
     this.props.onAddStaff(newStaff);
@@ -104,7 +103,7 @@ class StaffForm extends Component {
 
         <Modal isOpen={this.state.isModalOpen}>
           <ModalBody>
-            <Form onSubmit={this.handleAddStaff}>
+            <Form onSubmit={(values) => this.handleAddStaff(values)}>
               <FormGroup row>
                 <Label htmlFor="name" md={5}>
                   Tên Nhân viên
@@ -246,8 +245,8 @@ class StaffForm extends Component {
               </FormGroup>
 
               <FormGroup row>
-                <Col md={{ size: 10, offset: 2 }}>
-                  <Button type="submit" color="primary">
+                <Col md={{ size: 10 }}>
+                  <Button type="submit" value="submit" color="primary">
                     Thêm
                   </Button>
                 </Col>
