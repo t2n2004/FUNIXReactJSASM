@@ -8,7 +8,7 @@ import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postFeedbacks, fetchFeedbacks } from '../redux/ActionCreators';
 import { actions } from "react-redux-form";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -31,7 +31,10 @@ const mapDispatchToProps = (dispatch) => ({
   },
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
-  fetchPLeaders: () => dispatch(fetchLeaders()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
+
+  postFeedbacks: (firstname, lastname, telnum, email, agree, contactType, message) => dispatch(postFeedbacks(firstname, lastname, telnum, email, agree, contactType, message)),
+  fetchFeedbacks: () => dispatch(fetchFeedbacks()),
 });
 
 class Main extends Component {
@@ -43,7 +46,8 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
-    this.props.fetchPLeaders();
+    this.props.fetchLeaders();
+    this.props.fetchFeedbacks();
   }
 
 
@@ -87,7 +91,7 @@ class Main extends Component {
                   <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />} />} />
                   <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
                   <Route path='/menu/:dishId' component={DishWithId} />
-                  <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+                  <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedbacks={this.props.postFeedbacks} />} />
                   <Redirect to="/home" />
               </Switch>
             </CSSTransition>

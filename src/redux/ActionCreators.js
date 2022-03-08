@@ -148,7 +148,7 @@ export const addPromos = (promos) => ({
 
 
 
-
+// task 1
 export const fetchLeaders = () => (dispatch) => {
     
   dispatch(leadersLoading());
@@ -185,3 +185,72 @@ export const addLeaders = (leaders) => ({
   type: ActionTypes.ADD_LEADERS,
   payload: leaders
 });
+
+
+//task 2
+export const fetchFeedbacks = () => (dispatch) => {    
+  return fetch(baseUrl + 'feedbacks')
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+          var errmess = new Error(error.message);
+          throw errmess;
+    })
+  .then(response => response.json())
+  .then(feedbacks => dispatch(sendFeedbacks(feedbacks)))
+  .catch(error => dispatch(feedbacksFailed(error.message)));
+};
+
+export const feedbacksFailed = (errmess) => ({
+  type: ActionTypes.FEEDBACKS_FAILED,
+  payload: errmess
+});
+
+export const sendFeedbacks = (feedbacks) => ({
+  type: ActionTypes.ADD_FEEDBACKS,
+  payload: feedbacks
+});
+
+export const postFeedbacks = (firstname, lastname, telnum, email, agree, contactType, message) => (dispatch) => {
+
+  const newFeedback = {
+      firstname: firstname,
+      lastname: lastname,
+      telnum: telnum,
+      email: email,
+      agree: agree,
+      contactType: contactType,
+      message: message
+  };
+  
+  return fetch(baseUrl + 'feedbacks', {
+      method: "POST",
+      body: JSON.stringify(newFeedback),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+  })
+  .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        var error = new Error('Error ' + response.status + ': ' + response.statusText);
+        error.response = response;
+        throw error;
+      }
+    },
+    error => {
+          throw error;
+    })
+  .then(response => response.json())
+  .then(response => dispatch(sendFeedbacks(response)))
+  .catch(error =>  { console.log('post feedback', error.message); alert('Your feedback could not be posted\nError: '+error.message); });
+};
