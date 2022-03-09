@@ -2,32 +2,27 @@ import React from "react";
 import { Media } from "reactstrap";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 function RenderLeader({ leaders }) {
   if (leaders != null)
     return (
-      <div>
-        {leaders.map((leader) => {
-          return (
-            <div key={`leader-${leader.id}`}>
-              <Media tag="li">
-                <Media left middle className="m-3">
-                  <Media
-                    object
-                    src={baseUrl + leader.image}
-                    alt={leader.name}
-                  />
-                </Media>
-                <Media body className="m-3">
-                  <Media heading>{leader.name}</Media>
-                  <p>{leader.designation}</p>
-                  <p>{leader.description}</p>
-                </Media>
+      <TransitionGroup className="todo-list" component="ul">
+        {leaders.map((leader) => (
+          <CSSTransition key={leader.id} timeout={500} classNames="fade">
+            <Media tag="li">
+              <Media left middle className="m-3">
+                <Media object src={baseUrl + leader.image} alt={leader.name} />
               </Media>
-            </div>
-          );
-        })}
-      </div>
+              <Media body className="m-3">
+                <Media heading>{leader.name}</Media>
+                <p>{leader.designation}</p>
+                <p>{leader.description}</p>
+              </Media>
+            </Media>
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
     );
   else {
     return <div>1</div>;
@@ -62,7 +57,7 @@ const Leaders = (props) => {
       </div>
     );
   } else {
-    return <div>2</div>;
+    return <div>No leaders.</div>;
   }
 };
 
