@@ -4,11 +4,11 @@ import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-function RenderLeader({ leaders }) {
-  if (leaders != null)
-    return (
-      <TransitionGroup className="todo-list" component="ul">
-        {leaders.map((leader) => (
+
+
+function RenderLeader({leader}) {
+  return(
+    <TransitionGroup className="todo-list" component="ul">
           <CSSTransition key={leader.id} timeout={500} classNames="fade">
             <Media tag="li">
               <Media left middle className="m-3">
@@ -21,44 +21,45 @@ function RenderLeader({ leaders }) {
               </Media>
             </Media>
           </CSSTransition>
-        ))}
       </TransitionGroup>
-    );
-  else {
-    return <div>1</div>;
-  }
+  );
 }
 
 const Leaders = (props) => {
-  if (props.leaders.isLoading) {
+  const leaders = props.leaders.map((leader) => {
     return (
-      <div className="container">
-        <div className="row">
-          <Loading />
-        </div>
+      <div key={`leader-${leader.id}`} className="col-12 m-1">
+        <RenderLeader leader={leader} />
       </div>
     );
-  } else if (props.leaders.errMess) {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h4>{props.leaders.errMess}</h4>
-          </div>
+  
+});
+if (props.leaders.isLoading) {
+  return (
+    <div className="container">
+      <div className="row">
+        <Loading />
+      </div>
+    </div>
+  );
+} else if (props.leaders.errMess) {
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <h4>{props.leaders.errMess}</h4>
         </div>
       </div>
-    );
-  } else if (props.leaders != null) {
-    return (
-      <div className="container">
-        <div className="row">
-          <RenderLeader leaders={props.leaders} />
-        </div>
-      </div>
-    );
-  } else {
-    return <div>No leaders.</div>;
-  }
-};
+    </div>
+  );
+}   else
+return (
+  <div className="row">
+    {leaders}
+  </div>
+)
+}
+
+
 
 export default Leaders;
