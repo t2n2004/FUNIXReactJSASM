@@ -8,8 +8,6 @@ import {
 } from "reactstrap";
 import Leaders from "./RenderLeaderComponent";
 import { Link } from "react-router-dom";
-import { Loading } from "./LoadingComponent";
-import { baseUrl } from "../shared/baseUrl";
 
 function About(props) {
   return (
@@ -88,7 +86,7 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <Leaders leaders={props.leaders.leaders}  />
+          <Leaders leaders={props.leaders}  />
         </div>
       </div>
     </div>
