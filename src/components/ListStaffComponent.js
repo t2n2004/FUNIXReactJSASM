@@ -8,16 +8,16 @@ import {
   Form,
   FormGroup,
   Label,
-  
 } from "reactstrap";
 import StaffDetail from "./StaffDetailComponent";
+import StaffForm from "./StaffFormComponent";
 
 class ListStaff extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedStaff: null,
-      staffs: this.props.staffs,
+      staffs: props.staffs,
       query: null,
       order: "name",
     };
@@ -77,7 +77,7 @@ class ListStaff extends Component {
       return (
         <div
           key={`staff-${staff.id}`}
-          className={`col-12 col-sm-4 col-md-2 my-1`}
+          className={`col-12 col-sm-4 col-md-2 mb-1`}
         >
           <Card onClick={() => this.onStaffSelect(staff)}>
             <CardImg src={staff.image} alt={staff.name} />
@@ -91,41 +91,46 @@ class ListStaff extends Component {
 
     return (
       <div className="container">
-        <div className="row">
-          <Form
-            inline
-            style={{ margin: "1em auto 1em" }}
-          >
-            <FormGroup>
-              <Label htmlFor="query">Tìm tên nhân viên:</Label>
-              <Input
-                type="text"
-                id="query"
-                name="query"
-                innerRef={(input) => (this.query = input)}
-                onChange={(event) => this.search(event)}
-              ></Input>
-            </FormGroup>
-          </Form>
+        <div className="row my-2">
+          <div className="col-12 col-md-6">
+            <Form inline className="my-2">
+              <FormGroup className="mb-0">
+                <Label htmlFor="query" className="mr-2">
+                  Tìm tên nhân viên:
+                </Label>
+                <Input
+                  type="text"
+                  id="query"
+                  name="query"
+                  innerRef={(input) => (this.query = input)}
+                  onChange={(event) => this.search(event)}
+                ></Input>
+              </FormGroup>
+            </Form>
+          </div>
 
-          <Form inline style={{ margin: "1em auto 1em" }}>
-            <FormGroup>
-              <Label> Sắp xếp theo: </Label>
-              <Input
-                type={"select"}
-                size="1"
-                value={this.state.order}
-                onChange={(event) => this.sort(event)}
-              >
-                <option value={"name"}>Tên</option>
-                <option value={"doB"}>Ngày sinh</option>
-                <option value={"startDate"}>Ngày vào công ty</option>
-              </Input>
-            </FormGroup>
-          </Form>
+          <div className="col-12 col-md-6">
+            <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-md-end">
+              <Form inline className="my-2 mr-2">
+                <FormGroup className="mb-0">
+                  <Label className="mr-2"> Sắp xếp theo: </Label>
+                  <Input
+                    type={"select"}
+                    size="1"
+                    value={this.state.order}
+                    onChange={(event) => this.sort(event)}
+                  >
+                    <option value={"name"}>Tên</option>
+                    <option value={"doB"}>Ngày sinh</option>
+                    <option value={"startDate"}>Ngày vào công ty</option>
+                  </Input>
+                </FormGroup>
+              </Form>
+
+              <StaffForm className="my-2" onAddStaff={this.props.addStaff} />
+            </div>
+          </div>
         </div>
-
-        
 
         {/* hiển thị danh sách */}
         <div className="row">{list}</div>

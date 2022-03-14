@@ -41,9 +41,12 @@ class StaffForm extends Component {
   render() {
     return (
       <div>
-        <Button className="mx-auto d-flex" outline onClick={this.toggleModal}>
-          <span className="fa fa-pencil fa-lg"></span>
-          Thêm nhân viên
+        <Button
+          className="d-flex align-items-center justify-content-center"
+          outline
+          onClick={this.toggleModal}
+        >
+          <i className="fa fa-plus fa-lg"></i>
         </Button>
 
         <Modal isOpen={this.state.isModalOpen}>

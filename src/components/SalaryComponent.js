@@ -65,19 +65,23 @@ class Salary extends Component {
     return (
       <div className="container">
         <div className="row">
-          <Form inline style={{ margin: "auto" }}>
-            <Label> Sắp xếp theo: </Label>
-            <Input
-              type={"select"}
-              size="1"
-              value={this.state.order}
-              onChange={(event) => this.sort(event)}
-            >
-              <option value={"id"}>Mã nhân viên</option>
-              <option value={"salary"}>Mức lương</option>
-              <option value={"salaryScale"}>Hệ số lương</option>
-            </Input>
-          </Form>
+          <div className="col-12">
+            <div className="d-flex flex-column flex-md-row align-items-md-center justify-content-md-end">
+              <Form inline className="my-2 mr-2">
+                <Label className="mr-2"> Sắp xếp theo: </Label>
+                <Input
+                  type={"select"}
+                  size="1"
+                  value={this.state.order}
+                  onChange={(event) => this.sort(event)}
+                >
+                  <option value={"id"}>Mã nhân viên</option>
+                  <option value={"salary"}>Mức lương</option>
+                  <option value={"salaryScale"}>Hệ số lương</option>
+                </Input>
+              </Form>
+            </div>
+          </div>
         </div>
         <div className="row">{salary}</div>
       </div>
