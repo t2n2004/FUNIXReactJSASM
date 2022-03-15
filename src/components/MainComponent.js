@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import ListStaff from "./ListStaffComponent";
+import ListStaffs from "./ListStaffsComponent";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Department from "./DepartmentComponent";
+import ListDepartments from "./ListDepartmentsComponent";
 import Salary from "./SalaryComponent";
-import { addStaff, fetchStaffs } from "../redux/ActionCreators";
+import {
+  addStaff,
+  fetchStaffs,
+  fetchDepartments,
+} from "../redux/ActionCreators";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,58 +20,34 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addStaff: (name, doB, startDate, salaryScale) =>
-    dispatch(addStaff(name, doB, startDate, salaryScale)),
+  addStaff: (staff) => dispatch(addStaff(staff)),
+
   fetchStaffs: () => {
     dispatch(fetchStaffs());
+  },
+
+  fetchDepartments: () => {
+    dispatch(fetchDepartments());
   },
 });
 
 class Main extends Component {
   constructor(props) {
     super(props);
-
-    this.addStaff = this.addStaff.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchStaffs();
-  }
-
-  addStaff(newStaff) {
-    // update danh sách staff
-    const staff = {
-      ...newStaff,
-      id: this.props.staffs.staffs.length,
-      department: this.props.departments.departments.find(
-        (dpm) => dpm.id == newStaff.department
-      ),
-      image: "/assets/images/alberto.png",
-    };
-
-    this.setState({
-      staffs: this.props.staffs.push(staff),
-    });
-
-    // update numberOfStaff trong phòng ban
-    const departments = this.props.departments.departments;
-    departments.forEach((item) => {
-      if (item.id == newStaff.department) {
-        item.numberOfStaff += 1;
-      }
-    });
-
-    this.setState({
-      departments: departments,
-    });
+    this.props.fetchDepartments();
   }
 
   render() {
     const StaffPage = () => {
       return (
         <div>
-          <ListStaff
-            staffs={this.props.staffs.staffs}
+          <ListStaffs
+            staffs={this.props.staffs}
+            departments={this.props.departments}
             onAddStaff={this.props.addStaff}
           />
         </div>
@@ -78,20 +58,26 @@ class Main extends Component {
       <div>
         <Header />
         <Switch>
-          <Route path="/staff" component={StaffPage} />
+          <Route path="/staffs" component={StaffPage} />
+
           <Route
             exact
-            path="/department"
+            path="/departments"
             component={() => (
-              <Department departments={this.props.departments} />
+              <ListDepartments
+                departments={this.props.departments}
+                staffs={this.props.staffs}
+              />
             )}
           />
+
           <Route
             exact
             path="/salary"
             component={() => <Salary staffs={this.props.staffs.staffs} />}
           />
-          <Redirect to="/staff" />
+
+          <Redirect to="/staffs" />
         </Switch>
         <Footer />
       </div>

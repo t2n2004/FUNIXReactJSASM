@@ -1,26 +1,22 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  Input,
-  Form,
-  FormGroup,
-  Label,
-} from "reactstrap";
+import { Input, Form, FormGroup, Label } from "reactstrap";
+
+import Staff from "./StaffComponent";
 import StaffDetail from "./StaffDetailComponent";
 import StaffForm from "./StaffFormComponent";
 
 class ListStaff extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       selectedStaff: null,
-      staffs: props.staffs,
+      staffs: props.staffs.staffs,
       query: null,
       order: "name",
     };
+
+    this.onStaffSelect = this.onStaffSelect.bind(this);
   }
 
   // hàm hiển thị chi tiết của nhân viên
@@ -64,29 +60,20 @@ class ListStaff extends Component {
 
   renderSelected() {
     return (
-      <div className="container">
-        <div className="row">
-          <StaffDetail staff={this.state.selectedStaff} />
-        </div>
-      </div>
+      <StaffDetail
+        staff={this.state.selectedStaff}
+        departments={this.props.departments.departments}
+      />
     );
   }
 
   renderList() {
+    if (this.props.staffs.isLoading || this.props.departments.isLoading) {
+      return <div>Loading...</div>;
+    }
+
     const list = this.state.staffs.map((staff) => {
-      return (
-        <div
-          key={`staff-${staff.id}`}
-          className={`col-12 col-sm-4 col-md-2 mb-1`}
-        >
-          <Card onClick={() => this.onStaffSelect(staff)}>
-            <CardImg src={staff.image} alt={staff.name} />
-            <CardBody>
-              <CardText style={{ textAlign: "center" }}>{staff.name}</CardText>
-            </CardBody>
-          </Card>
-        </div>
-      );
+      return <Staff staff={staff} onStaffSelect={this.onStaffSelect} />;
     });
 
     return (
@@ -127,7 +114,11 @@ class ListStaff extends Component {
                 </FormGroup>
               </Form>
 
-              <StaffForm className="my-2" onAddStaff={this.props.addStaff} />
+              <StaffForm
+                className="my-2"
+                onAddStaff={this.props.addStaff}
+                departments={this.props.departments.departments}
+              />
             </div>
           </div>
         </div>

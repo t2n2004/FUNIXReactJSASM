@@ -38,6 +38,12 @@ class StaffForm extends Component {
     this.props.onAddStaff(newStaff);
   }
 
+  departmentOptions() {
+    return this.props.departments.map((dep) => {
+      return <option value={dep.id}>{dep.name}</option>;
+    });
+  }
+
   render() {
     return (
       <div>
@@ -140,18 +146,14 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.select
-                    defaultValue={"Dept01"}
-                    model=".department"
+                    defaultValue={this.props.departments[0].id}
+                    model=".departmentId"
                     id="department"
                     name="department"
                     placeholder="Phòng ban"
                     className="form-control"
                   >
-                    <option value={"Dept01"}>Sale</option>
-                    <option value={"Dept02"}>HR</option>
-                    <option value={"Dept03"}>Marketing</option>
-                    <option value={"Dept04"}>IT</option>
-                    <option value={"Dept05"}>Finance</option>
+                    {this.departmentOptions()}
                   </Control.select>
                 </Col>
               </Row>

@@ -1,11 +1,17 @@
-import * as ActionTypes from "./ActionTypes";
+import {
+  ADD_STAFFS,
+  ADD_STAFF,
+  STAFFS_LOADING,
+  STAFFS_FAILED,
+} from "./ActionTypes";
 
 export const Staffs = (
   state = { isLoading: true, errMess: null, staffs: [] },
   action
 ) => {
   switch (action.type) {
-    case ActionTypes.ADD_STAFFS:
+    case ADD_STAFFS:
+      console.log("add stafffs");
       return {
         ...state,
         isLoading: false,
@@ -13,11 +19,21 @@ export const Staffs = (
         staffs: action.payload,
       };
 
-    case ActionTypes.STAFFS_LOADING:
+    case STAFFS_LOADING:
       return { ...state, isLoading: true, errMess: null, staffs: [] };
 
-    case ActionTypes.STAFFS_FAILED:
+    case STAFFS_FAILED:
       return { ...state, isLoading: false, errMess: action.payload };
+
+    case ADD_STAFF:
+      const maxId = Math.max(...state.staffs.map(({ id }) => id));
+      const staff = {
+        ...action.payload,
+        id: maxId + 1,
+        image: `https://i.pravatar.cc/250?img=${maxId + 1}`,
+      };
+  
+      return { ...state, staffs: state.staffs.concat([staff]) };
 
     default:
       return state;
