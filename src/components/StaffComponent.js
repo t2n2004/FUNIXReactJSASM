@@ -4,6 +4,13 @@ import { Card, CardImg, CardText, CardBody } from "reactstrap";
 class Staff extends Component {
   constructor(props) {
     super(props);
+    this.onSelectStaff = this.onSelectStaff.bind(this);
+  }
+
+  onSelectStaff() {
+    if (this.props.onStaffSelect) {
+      this.props.onStaffSelect(this.props.staff);
+    }
   }
 
   render() {
@@ -14,12 +21,10 @@ class Staff extends Component {
         key={`staff-${this.props.staff.id}`}
         className={`col-12 col-sm-4 col-md-2 mb-4`}
       >
-        <Card onClick={() => this.props.onStaffSelect(this.props.staff)}>
+        <Card onClick={() => this.onSelectStaff()}>
           <CardImg src={avatar} alt={this.props.staff.name} />
           <CardBody>
-            <CardText className="text-center">
-              {this.props.staff.name}
-            </CardText>
+            <CardText className="text-center">{this.props.staff.name}</CardText>
           </CardBody>
         </Card>
       </div>

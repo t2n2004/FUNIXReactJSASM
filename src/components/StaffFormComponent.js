@@ -17,6 +17,9 @@ class StaffForm extends Component {
   constructor(props) {
     super(props);
 
+    console.log('staff form');
+    console.log(props);
+
     this.state = {
       isModalOpen: false,
     };
@@ -31,16 +34,15 @@ class StaffForm extends Component {
     });
   }
 
-  handleAddStaff(event) {
+  handleAddStaff(staff) {
     // event.preventDefault();
     this.toggleModal();
-    const newStaff = event;
-    this.props.onAddStaff(newStaff);
+    this.props.onAddStaff(staff);
   }
 
   departmentOptions() {
     return this.props.departments.map((dep) => {
-      return <option value={dep.id}>{dep.name}</option>;
+      return <option key={dep.id} value={dep.id}>{dep.name}</option>;
     });
   }
 

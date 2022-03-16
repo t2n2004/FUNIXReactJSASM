@@ -1,14 +1,9 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
-export const addStaff = (name, doB, startDate, salaryScale) => ({
+export const addStaff = (staff) => ({
   type: ActionTypes.ADD_STAFF,
-  payload: {
-    name: name,
-    doB: doB,
-    startDate: startDate,
-    salaryScale: salaryScale,
-  },
+  payload: staff,
 });
 
 export const fetchStaffs = () => (dispatch) => {
@@ -53,6 +48,28 @@ export const departmentsFailed = (errmess) => ({
 export const addDepartments = (departments) => ({
   type: ActionTypes.ADD_DEPARTMENTS,
   payload: departments,
+});
+
+export const fetchDepartmentStaffs = (departmentId) => (dispatch) => {
+  dispatch(departmentStaffsLoading());
+
+  return fetch(baseUrl + "departments/" + departmentId)
+    .then((response) => response.json())
+    .then((staffs) => dispatch(addDepartmentStaffs(staffs)));
+};
+
+export const addDepartmentStaffs = (staffs) => ({
+  type: ActionTypes.ADD_DEPARTMENT_STAFFS,
+  payload: staffs,
+});
+
+export const departmentStaffsLoading = () => ({
+  type: ActionTypes.DEPARTMENT_STAFFS_LOADING,
+});
+
+export const departmentStaffsFailed = (errmess) => ({
+  type: ActionTypes.DEPARTMENT_STAFFS_FAILED,
+  payload: errmess,
 });
 
 export const fetchSalaries = () => (dispatch) => {

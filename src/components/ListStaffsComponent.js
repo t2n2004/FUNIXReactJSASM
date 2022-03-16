@@ -1,9 +1,35 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Input, Form, FormGroup, Label } from "reactstrap";
 
 import Staff from "./StaffComponent";
 import StaffDetail from "./StaffDetailComponent";
 import StaffForm from "./StaffFormComponent";
+
+import {
+  addStaff,
+  fetchStaffs,
+  fetchDepartments,
+} from "../redux/ActionCreators";
+
+const mapStateToProps = (state) => {
+  return {
+    staffs: state.staffs,
+    departments: state.departments,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  addStaff: (staff) => dispatch(addStaff(staff)),
+
+  fetchStaffs: () => {
+    dispatch(fetchStaffs());
+  },
+
+  fetchDepartments: () => {
+    dispatch(fetchDepartments());
+  },
+});
 
 class ListStaff extends Component {
   constructor(props) {
@@ -11,12 +37,16 @@ class ListStaff extends Component {
 
     this.state = {
       selectedStaff: null,
-      staffs: props.staffs.staffs,
       query: null,
       order: "name",
     };
 
     this.onStaffSelect = this.onStaffSelect.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchStaffs();
+    this.props.fetchDepartments();
   }
 
   // hàm hiển thị chi tiết của nhân viên
@@ -26,36 +56,36 @@ class ListStaff extends Component {
 
   // hàm search theo name
   search(event) {
-    this.setState({ query: event.target.value }, this.filterStaffs);
+    this.setState({
+      query: event.target.value,
+    });
   }
 
   // hàm sort --> chọn theo name hoặc doB
   sort(event) {
-    this.setState({ order: event.target.value }, this.filterStaffs);
+    this.setState({
+      order: event.target.value,
+    });
   }
 
-  //hàm render ra newlist = list đã được sort và search, nếu ko có thì lấy list STAFFS
   filterStaffs() {
-    let newList;
+    let staffs = this.props.staffs.staffs;
 
     // filter staff --> lấy list đã được search, nếu ko có thì lấy STAFFS ban đầu
     if (this.state.query) {
-      newList = this.props.staffs.filter((staff) => {
+      staffs = this.props.staffs.staffs.filter((staff) => {
         return staff.name
           .toLowerCase()
           .includes(this.state.query.toLowerCase());
       });
-    } else {
-      newList = this.props.staffs;
     }
 
     // lấy ds đã search để sort tiếp theo thứ tự của order
-    newList = newList.sort((a, b) =>
+    staffs = staffs.sort((a, b) =>
       a[this.state.order] > b[this.state.order] ? 1 : -1
     );
 
-    // set lại state cho danh sách staffs
-    this.setState({ staffs: newList });
+    return staffs;
   }
 
   renderSelected() {
@@ -72,8 +102,14 @@ class ListStaff extends Component {
       return <div>Loading...</div>;
     }
 
-    const list = this.state.staffs.map((staff) => {
-      return <Staff staff={staff} onStaffSelect={this.onStaffSelect} />;
+    const list = this.filterStaffs().map((staff) => {
+      return (
+        <Staff
+          key={staff.id}
+          staff={staff}
+          onStaffSelect={this.onStaffSelect}
+        />
+      );
     });
 
     return (
@@ -140,4 +176,4 @@ class ListStaff extends Component {
   }
 }
 
-export default ListStaff;
+export default connect(mapStateToProps, mapDispatchToProps)(ListStaff);

@@ -11,7 +11,6 @@ export const Staffs = (
 ) => {
   switch (action.type) {
     case ADD_STAFFS:
-      console.log("add stafffs");
       return {
         ...state,
         isLoading: false,
@@ -32,7 +31,7 @@ export const Staffs = (
         id: maxId + 1,
         image: `https://i.pravatar.cc/250?img=${maxId + 1}`,
       };
-  
+
       return { ...state, staffs: state.staffs.concat([staff]) };
 
     default:
