@@ -9,6 +9,20 @@ import {
   Form,
   Label,
 } from "reactstrap";
+import { connect } from "react-redux";
+import { fetchSalaries } from "../redux/ActionCreators";
+
+const mapStateToProps = (state) => {
+  return {
+    salaries: state.salaries,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchSalaries: () => {
+    dispatch(fetchSalaries());
+  },
+});
 
 class Salary extends Component {
   constructor(props) {
@@ -19,31 +33,22 @@ class Salary extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.fetchSalaries();
+  }
+
   sort(event) {
     this.setState({ order: event.target.value });
   }
 
-  renderSalary() {
-    const basicSalary = 3000000;
-    const overTimeSalary = 200000;
-
-    //tạo ra 1 list mới từ list cũ + property salary
-    let newSalaryList = this.state.staffs.map((staff) => {
-      return {
-        ...staff,
-        salary: Math.round(
-          staff.salaryScale * basicSalary + staff.overTime * overTimeSalary
-        ),
-      };
-    });
-
+  renderSalaries() {
     // sort theo order
-    newSalaryList = newSalaryList.sort((a, b) =>
+    const sortedSalaries = this.props.salaries.salaries.sort((a, b) =>
       a[this.state.order] > b[this.state.order] ? 1 : -1
     );
 
     //render danh sách bảng lương
-    const salary = newSalaryList.map((staff) => {
+    return sortedSalaries.map((staff) => {
       return (
         <div
           key={`staff-${staff.id}`}
@@ -61,7 +66,9 @@ class Salary extends Component {
         </div>
       );
     });
+  }
 
+  render() {
     return (
       <div className="container">
         <div className="row">
@@ -83,14 +90,11 @@ class Salary extends Component {
             </div>
           </div>
         </div>
-        <div className="row">{salary}</div>
+        
+        <div className="row">{this.renderSalaries()}</div>
       </div>
     );
   }
-
-  render() {
-    return this.renderSalary();
-  }
 }
 
-export default Salary;
+export default connect(mapStateToProps, mapDispatchToProps)(Salary);

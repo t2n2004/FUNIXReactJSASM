@@ -1,10 +1,37 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
 
-export const addStaff = (staff) => ({
-  type: ActionTypes.ADD_STAFF,
-  payload: staff,
-});
+export const createStaff = (staff) => (dispatch) => {
+  return fetch(baseUrl + "staffs", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(staff),
+  })
+    .then((response) => response.json())
+    .then((staffs) => dispatch(addStaffs(staffs)));
+};
+
+export const deleteStaff = (staff) => (dispatch) => {
+  return fetch(baseUrl + "staffs/" + staff.id, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((staffs) => dispatch(addStaffs(staffs)));
+};
+
+export const updateStaff = (staff) => (dispatch) => {
+  return fetch(baseUrl + "staffs", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(staff),
+  })
+    .then((response) => response.json())
+    .then((staffs) => dispatch(addStaffs(staffs)));
+};
 
 export const fetchStaffs = () => (dispatch) => {
   dispatch(staffsLoading(true));

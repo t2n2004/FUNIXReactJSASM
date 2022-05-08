@@ -1,6 +1,19 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 import { Button, Modal, ModalBody, Label, Row, Col } from "reactstrap";
 import { Control, LocalForm, Errors } from "react-redux-form";
+
+import { createStaff, updateStaff } from "../redux/ActionCreators";
+
+const mapStateToProps = () => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  createStaff: (staff) => dispatch(createStaff(staff)),
+  updateStaff: (staff) => dispatch(updateStaff(staff)),
+});
 
 const required = (val) => val && val.length;
 const validBday = (val) => {
@@ -17,15 +30,22 @@ class StaffForm extends Component {
   constructor(props) {
     super(props);
 
-    console.log('staff form');
-    console.log(props);
-
     this.state = {
       isModalOpen: false,
+      staff: props.staff ? { ...props.staff } : {},
+      isEdit: !!props.staff,
     };
 
+    if (this.state.staff.doB) {
+      this.state.staff.doB = this.state.staff.doB.substr(0, 10);
+    }
+
+    if (this.state.staff.startDate) {
+      this.state.staff.startDate = this.state.staff.startDate.substr(0, 10);
+    }
+
     this.toggleModal = this.toggleModal.bind(this);
-    this.handleAddComment = this.handleAddStaff.bind(this);
+    this.onInputchange = this.onInputchange.bind(this);
   }
 
   toggleModal() {
@@ -34,19 +54,54 @@ class StaffForm extends Component {
     });
   }
 
-  handleAddStaff(staff) {
-    // event.preventDefault();
-    this.toggleModal();
-    this.props.onAddStaff(staff);
+  onInputchange(event) {
+    this.setState({
+      staff: {
+        ...this.state.staff,
+        [event.target.name]: event.target.value,
+      },
+    });
+  }
+
+  submit() {
+    if (this.state.isEdit) {
+      this.props.updateStaff(this.state.staff).then(() => {
+        this.props.onStaffUpdate(this.state.staff);
+        this.toggleModal();
+      });
+    } else {
+      this.props.createStaff(this.state.staff).then(() => this.toggleModal());
+    }
   }
 
   departmentOptions() {
     return this.props.departments.map((dep) => {
-      return <option key={dep.id} value={dep.id}>{dep.name}</option>;
+      return (
+        <option key={dep.id} value={dep.id}>
+          {dep.name}
+        </option>
+      );
     });
   }
 
   render() {
+    const {
+      name,
+      doB,
+      startDate,
+      departmentId,
+      salaryScale,
+      annualLeave,
+      overTime,
+    } = this.state.staff;
+
+    let btn;
+    if (this.state.isEdit) {
+      btn = "Sua nhan vien";
+    } else {
+      btn = <i className="fa fa-plus fa-lg"></i>;
+    }
+
     return (
       <div>
         <Button
@@ -54,12 +109,12 @@ class StaffForm extends Component {
           outline
           onClick={this.toggleModal}
         >
-          <i className="fa fa-plus fa-lg"></i>
+          {btn}
         </Button>
 
         <Modal isOpen={this.state.isModalOpen}>
           <ModalBody>
-            <LocalForm onSubmit={(values) => this.handleAddStaff(values)}>
+            <LocalForm onSubmit={() => this.submit()}>
               <Row className="form-group">
                 <Label htmlFor="name" md={5}>
                   Tên nhân viên
@@ -69,6 +124,8 @@ class StaffForm extends Component {
                     model=".name"
                     id="name"
                     name="name"
+                    value={name}
+                    onChange={this.onInputchange}
                     placeholder="Tên nhân viên"
                     className="form-control"
                     validators={{
@@ -96,8 +153,9 @@ class StaffForm extends Component {
                     model=".doB"
                     id="doB"
                     name="doB"
+                    value={doB}
+                    onChange={this.onInputchange}
                     className="form-control"
-                    value={this.state.tenState}
                     validators={{
                       required,
                       validBday,
@@ -125,8 +183,9 @@ class StaffForm extends Component {
                     model=".startDate"
                     id="startDate"
                     name="startDate"
+                    value={startDate}
+                    onChange={this.onInputchange}
                     className="form-control"
-                    value={this.state.tenState}
                     validators={{
                       required,
                     }}
@@ -152,6 +211,8 @@ class StaffForm extends Component {
                     model=".departmentId"
                     id="department"
                     name="department"
+                    value={departmentId}
+                    onChange={this.onInputchange}
                     placeholder="Phòng ban"
                     className="form-control"
                   >
@@ -170,6 +231,8 @@ class StaffForm extends Component {
                     model=".salaryScale"
                     id="salaryScale"
                     name="salaryScale"
+                    value={salaryScale}
+                    onChange={this.onInputchange}
                     placeholder="Hệ số lương"
                     className="form-control"
                   >
@@ -192,6 +255,8 @@ class StaffForm extends Component {
                     model=".annualLeave"
                     id="annualLeave"
                     name="annualLeave"
+                    value={annualLeave}
+                    onChange={this.onInputchange}
                     className="form-control"
                   />
                 </Col>
@@ -207,6 +272,8 @@ class StaffForm extends Component {
                     model=".overTime"
                     id="overTime"
                     name="overTime"
+                    value={overTime}
+                    onChange={this.onInputchange}
                     className="form-control"
                   />
                 </Col>
@@ -215,7 +282,11 @@ class StaffForm extends Component {
               <Row className="form-group">
                 <Col md={{ size: 10 }}>
                   <Button type="submit" value="submit" color="primary">
-                    Thêm
+                    {this.state.isEdit ? "Lưu" : "Thêm"}
+                  </Button>
+
+                  <Button className="ml-3" onClick={this.toggleModal}>
+                    Huy
                   </Button>
                 </Col>
               </Row>
@@ -227,4 +298,4 @@ class StaffForm extends Component {
   }
 }
 
-export default StaffForm;
+export default connect(mapStateToProps, mapDispatchToProps)(StaffForm);

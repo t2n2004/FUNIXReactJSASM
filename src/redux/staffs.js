@@ -1,8 +1,8 @@
 import {
   ADD_STAFFS,
-  ADD_STAFF,
   STAFFS_LOADING,
   STAFFS_FAILED,
+  REMOVE_STAFF,
 } from "./ActionTypes";
 
 export const Staffs = (
@@ -23,16 +23,6 @@ export const Staffs = (
 
     case STAFFS_FAILED:
       return { ...state, isLoading: false, errMess: action.payload };
-
-    case ADD_STAFF:
-      const maxId = Math.max(...state.staffs.map(({ id }) => id));
-      const staff = {
-        ...action.payload,
-        id: maxId + 1,
-        image: `https://i.pravatar.cc/250?img=${maxId + 1}`,
-      };
-
-      return { ...state, staffs: state.staffs.concat([staff]) };
 
     default:
       return state;

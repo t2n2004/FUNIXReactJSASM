@@ -7,9 +7,9 @@ import StaffDetail from "./StaffDetailComponent";
 import StaffForm from "./StaffFormComponent";
 
 import {
-  addStaff,
   fetchStaffs,
   fetchDepartments,
+  createStaff,
 } from "../redux/ActionCreators";
 
 const mapStateToProps = (state) => {
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addStaff: (staff) => dispatch(addStaff(staff)),
+  createStaff: (staff) => dispatch(createStaff(staff)),
 
   fetchStaffs: () => {
     dispatch(fetchStaffs());
@@ -42,6 +42,7 @@ class ListStaff extends Component {
     };
 
     this.onStaffSelect = this.onStaffSelect.bind(this);
+    this.onStaffDelete = this.onStaffDelete.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +53,10 @@ class ListStaff extends Component {
   // hàm hiển thị chi tiết của nhân viên
   onStaffSelect(staff) {
     this.setState({ selectedStaff: staff });
+  }
+
+  onStaffDelete() {
+    this.setState({ selectedStaff: null });
   }
 
   // hàm search theo name
@@ -93,6 +98,7 @@ class ListStaff extends Component {
       <StaffDetail
         staff={this.state.selectedStaff}
         departments={this.props.departments.departments}
+        onStaffDelete={this.onStaffDelete}
       />
     );
   }
@@ -152,7 +158,6 @@ class ListStaff extends Component {
 
               <StaffForm
                 className="my-2"
-                onAddStaff={this.props.addStaff}
                 departments={this.props.departments.departments}
               />
             </div>

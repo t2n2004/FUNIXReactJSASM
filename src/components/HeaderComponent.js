@@ -39,6 +39,7 @@ class Header extends Component {
                 alt="Ristorante Con Fusion"
               />
             </NavbarBrand>
+            
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav navbar>
                 <NavItem>
