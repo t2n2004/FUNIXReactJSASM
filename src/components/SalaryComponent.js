@@ -9,6 +9,7 @@ import {
   Form,
   Label,
 } from "reactstrap";
+import { FadeTransform } from "react-animation-components";
 import { connect } from "react-redux";
 import { fetchSalaries } from "../redux/ActionCreators";
 
@@ -54,15 +55,22 @@ class Salary extends Component {
           key={`staff-${staff.id}`}
           className={`col-12 col-sm-6 col-md-4 my-2`}
         >
-          <Card>
-            <CardTitle>{staff.name}</CardTitle>
-            <CardBody>
-              <CardText>Mã nhân viên: {staff.id}</CardText>
-              <CardText>Hệ số lương: {staff.salaryScale}</CardText>
-              <CardText>Số giờ làm thêm: {staff.overTime}</CardText>
-            </CardBody>
-            <CardFooter>Lương: {staff.salary}</CardFooter>
-          </Card>
+          <FadeTransform
+            in
+            transformProps={{
+              exitTransform: "scale(0.5) translateY(-50%)",
+            }}
+          >
+            <Card>
+              <CardTitle>{staff.name}</CardTitle>
+              <CardBody>
+                <CardText>Mã nhân viên: {staff.id}</CardText>
+                <CardText>Hệ số lương: {staff.salaryScale}</CardText>
+                <CardText>Số giờ làm thêm: {staff.overTime}</CardText>
+              </CardBody>
+              <CardFooter>Lương: {staff.salary}</CardFooter>
+            </Card>
+          </FadeTransform>
         </div>
       );
     });
@@ -90,7 +98,7 @@ class Salary extends Component {
             </div>
           </div>
         </div>
-        
+
         <div className="row">{this.renderSalaries()}</div>
       </div>
     );

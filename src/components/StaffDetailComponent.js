@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { Media, Breadcrumb, BreadcrumbItem, Button } from "reactstrap";
-import StaffForm from "./StaffFormComponent";
 import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
-
+import StaffForm from "./StaffFormComponent";
 import { deleteStaff } from "../redux/ActionCreators";
 
 const mapStateToProps = () => {

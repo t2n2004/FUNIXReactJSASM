@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ListStaffs from "./ListStaffsComponent";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import ListDepartments from "./ListDepartmentsComponent";
 import Salary from "./SalaryComponent";
 
@@ -26,6 +26,7 @@ class Main extends Component {
         <Footer />
       </div>
     );
+
   }
 }
 

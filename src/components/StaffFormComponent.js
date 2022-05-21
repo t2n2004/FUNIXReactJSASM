@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { Button, Modal, ModalBody, Label, Row, Col } from "reactstrap";
-import { actions, Form, Control, Errors } from "react-redux-form";
+import { Form, Control, Errors } from "react-redux-form";
 
 import { createStaff, updateStaff, addStaffs } from "../redux/ActionCreators";
 

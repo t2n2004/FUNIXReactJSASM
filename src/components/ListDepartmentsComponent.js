@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardText, CardBody, CardTitle } from "reactstrap";
+import { FadeTransform } from 'react-animation-components';
 import { connect } from "react-redux";
 import {
   fetchDepartments,
@@ -63,6 +64,12 @@ class Department extends Component {
           key={`department-${department.id}`}
           className="col-12 col-sm-6 col-md-4 my-3"
         >
+          <FadeTransform
+          in
+          transformProps={{
+            exitTransform: "scale(0.5) translateY(-50%)",
+          }}
+        >
           <Card onClick={() => this.onDepartmentSelect(department)}>
             <CardBody>
               <CardTitle>{department.name}</CardTitle>
@@ -71,6 +78,7 @@ class Department extends Component {
               </CardText>
             </CardBody>
           </Card>
+          </FadeTransform>
         </div>
       );
     });

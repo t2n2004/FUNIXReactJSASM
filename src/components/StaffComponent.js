@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, CardImg, CardText, CardBody } from "reactstrap";
+import { FadeTransform } from "react-animation-components";
 
 class Staff extends Component {
   constructor(props) {
@@ -21,12 +22,21 @@ class Staff extends Component {
         key={`staff-${this.props.staff.id}`}
         className={`col-12 col-sm-4 col-md-2 mb-4`}
       >
-        <Card onClick={() => this.onSelectStaff()}>
-          <CardImg src={avatar} alt={this.props.staff.name} />
-          <CardBody>
-            <CardText className="text-center">{this.props.staff.name}</CardText>
-          </CardBody>
-        </Card>
+        <FadeTransform
+          in
+          transformProps={{
+            exitTransform: "scale(0.5) translateY(-50%)",
+          }}
+        >
+          <Card onClick={() => this.onSelectStaff()}>
+            <CardImg src={avatar} alt={this.props.staff.name} />
+            <CardBody>
+              <CardText className="text-center">
+                {this.props.staff.name}
+              </CardText>
+            </CardBody>
+          </Card>
+        </FadeTransform>
       </div>
     );
   }
