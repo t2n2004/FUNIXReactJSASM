@@ -49,7 +49,7 @@ class StaffDetail extends Component {
           <div className="col-12">
             <Breadcrumb>
               <BreadcrumbItem>
-                <Link to="/staffs">Nhân viên</Link>
+                <Link to="/">Nhân viên</Link>
               </BreadcrumbItem>
               <BreadcrumbItem active>{staff.name}</BreadcrumbItem>
             </Breadcrumb>
@@ -80,7 +80,7 @@ class StaffDetail extends Component {
                 color="danger"
                 onClick={() => this.onDeleteStaff()}
               >
-                Xoa nhan vien
+                Xóa nhân viên
               </Button>
 
               <StaffForm

@@ -1,12 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
+import { createForms, combineForms } from "react-redux-form";
 import { Staffs } from "./staffs";
 import { Departments } from "./departments";
 import { Salaries } from "./salary";
-
-import { createForms } from "react-redux-form";
-
-import thunk from "redux-thunk";
-import logger from "redux-logger";
 import { InitialStaffForm } from "./form";
 
 export const ConfigureStore = () => {

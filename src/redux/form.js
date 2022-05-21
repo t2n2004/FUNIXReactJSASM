@@ -1,4 +1,5 @@
 export const InitialStaffForm = {
+    id: 0,
     name: '',
     doB: '',
     startDate: '',

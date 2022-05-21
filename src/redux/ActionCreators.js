@@ -9,8 +9,8 @@ export const createStaff = (staff) => (dispatch) => {
     },
     body: JSON.stringify(staff),
   })
-    .then((response) => response.json())
-    .then((staffs) => dispatch(addStaffs(staffs)));
+  .then((response) => response.json())
+  .then((staffs) => dispatch(addStaffs(staffs)));
 };
 
 export const deleteStaff = (staff) => (dispatch) => {
@@ -29,13 +29,12 @@ export const updateStaff = (staff) => (dispatch) => {
     },
     body: JSON.stringify(staff),
   })
-    .then((response) => response.json())
-    .then((staffs) => dispatch(addStaffs(staffs)));
+  .then((response) => response.ok && response.json())
+  .then((staffs) => staffs && dispatch(addStaffs(staffs)));
 };
 
 export const fetchStaffs = () => (dispatch) => {
   dispatch(staffsLoading(true));
-
   return fetch(baseUrl + "staffs")
     .then((response) => response.json())
     .then((staffs) => dispatch(addStaffs(staffs)));

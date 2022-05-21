@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Input, Form, FormGroup, Label } from "reactstrap";
-
+import { actions } from "react-redux-form";
 import Staff from "./StaffComponent";
 import StaffDetail from "./StaffDetailComponent";
 import StaffForm from "./StaffFormComponent";
@@ -14,8 +14,8 @@ import {
 
 const mapStateToProps = (state) => {
   return {
-    staffs: state.staffs,
-    departments: state.departments,
+    staffs: state.staffs, //lấy staffs từ Redux store
+    departments: state.departments, //lấy departments từ Redux store
   };
 };
 
@@ -29,6 +29,8 @@ const mapDispatchToProps = (dispatch) => ({
   fetchDepartments: () => {
     dispatch(fetchDepartments());
   },
+
+  dispatch
 });
 
 class ListStaff extends Component {
@@ -53,6 +55,16 @@ class ListStaff extends Component {
   // hàm hiển thị chi tiết của nhân viên
   onStaffSelect(staff) {
     this.setState({ selectedStaff: staff });
+    const { id, name, doB, startDate, departmentId, salaryScale, annualLeave, overTime } = staff;
+  
+    this.props.dispatch(actions.change('newStaff.id', id));
+    this.props.dispatch(actions.change('newStaff.name', name));
+    this.props.dispatch(actions.change('newStaff.doB', doB.substr(0, 10)));
+    this.props.dispatch(actions.change('newStaff.startDate', startDate.substr(0, 10)));
+    this.props.dispatch(actions.change('newStaff.departmentId', departmentId));
+    this.props.dispatch(actions.change('newStaff.salaryScale', salaryScale));
+    this.props.dispatch(actions.change('newStaff.annualLeave', annualLeave));
+    this.props.dispatch(actions.change('newStaff.overTime', overTime));
   }
 
   onStaffDelete() {

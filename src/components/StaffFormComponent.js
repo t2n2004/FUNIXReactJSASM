@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { Button, Modal, ModalBody, Label, Row, Col } from "reactstrap";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { actions, Form, Control, Errors } from "react-redux-form";
 
-import { createStaff, updateStaff } from "../redux/ActionCreators";
+import { createStaff, updateStaff, addStaffs } from "../redux/ActionCreators";
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    staffs: state.staffs.staffs, //lấy staffs từ Redux store
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   createStaff: (staff) => dispatch(createStaff(staff)),
   updateStaff: (staff) => dispatch(updateStaff(staff)),
+  dispatch
 });
 
 const required = (val) => val && val.length;
@@ -63,14 +66,21 @@ class StaffForm extends Component {
     });
   }
 
-  submit() {
+  submit(staff) {
     if (this.state.isEdit) {
-      this.props.updateStaff(this.state.staff).then(() => {
-        this.props.onStaffUpdate(this.state.staff);
+      this.props.updateStaff(staff).then(() => {
+        let staffs = [...this.props.staffs];
+        //cập nhật staff tương ứng
+      
+        let changedIndex = staffs.findIndex(s => s.id === staff.id);
+        staffs[changedIndex] = staff;
+        
+        this.props.dispatch(addStaffs(staffs)); //cập nhật danh sách nhân viên ở Redux store
+        this.props.onStaffUpdate(staff);
         this.toggleModal();
       });
     } else {
-      this.props.createStaff(this.state.staff).then(() => this.toggleModal());
+      this.props.createStaff(staff).then(() => this.toggleModal());
     }
   }
 
@@ -85,19 +95,10 @@ class StaffForm extends Component {
   }
 
   render() {
-    const {
-      name,
-      doB,
-      startDate,
-      departmentId,
-      salaryScale,
-      annualLeave,
-      overTime,
-    } = this.state.staff;
 
     let btn;
     if (this.state.isEdit) {
-      btn = "Sua nhan vien";
+      btn = "Sửa nhân viên";
     } else {
       btn = <i className="fa fa-plus fa-lg"></i>;
     }
@@ -114,18 +115,14 @@ class StaffForm extends Component {
 
         <Modal isOpen={this.state.isModalOpen}>
           <ModalBody>
-            <LocalForm onSubmit={() => this.submit()}>
+            <Form model='newStaff' onSubmit={(newStaff) => this.submit(newStaff)}>
               <Row className="form-group">
-                <Label htmlFor="name" md={5}>
+                <Label htmlFor="newStaff.name" md={5}>
                   Tên nhân viên
                 </Label>
                 <Col md={7}>
                   <Control.text
                     model=".name"
-                    id="name"
-                    name="name"
-                    value={name}
-                    onChange={this.onInputchange}
                     placeholder="Tên nhân viên"
                     className="form-control"
                     validators={{
@@ -151,10 +148,6 @@ class StaffForm extends Component {
                   <Control.text
                     type="date"
                     model=".doB"
-                    id="doB"
-                    name="doB"
-                    value={doB}
-                    onChange={this.onInputchange}
                     className="form-control"
                     validators={{
                       required,
@@ -181,10 +174,6 @@ class StaffForm extends Component {
                   <Control.text
                     type="date"
                     model=".startDate"
-                    id="startDate"
-                    name="startDate"
-                    value={startDate}
-                    onChange={this.onInputchange}
                     className="form-control"
                     validators={{
                       required,
@@ -207,12 +196,7 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.select
-                    defaultValue={this.props.departments[0].id}
                     model=".departmentId"
-                    id="department"
-                    name="department"
-                    value={departmentId}
-                    onChange={this.onInputchange}
                     placeholder="Phòng ban"
                     className="form-control"
                   >
@@ -227,12 +211,7 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.select
-                    defaultValue={"1.0"}
                     model=".salaryScale"
-                    id="salaryScale"
-                    name="salaryScale"
-                    value={salaryScale}
-                    onChange={this.onInputchange}
                     placeholder="Hệ số lương"
                     className="form-control"
                   >
@@ -251,12 +230,7 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.text
-                    defaultValue={"0"}
                     model=".annualLeave"
-                    id="annualLeave"
-                    name="annualLeave"
-                    value={annualLeave}
-                    onChange={this.onInputchange}
                     className="form-control"
                   />
                 </Col>
@@ -268,12 +242,7 @@ class StaffForm extends Component {
                 </Label>
                 <Col md={7}>
                   <Control.text
-                    defaultValue={"0"}
                     model=".overTime"
-                    id="overTime"
-                    name="overTime"
-                    value={overTime}
-                    onChange={this.onInputchange}
                     className="form-control"
                   />
                 </Col>
@@ -286,11 +255,11 @@ class StaffForm extends Component {
                   </Button>
 
                   <Button className="ml-3" onClick={this.toggleModal}>
-                    Huy
+                    Hủy
                   </Button>
                 </Col>
               </Row>
-            </LocalForm>
+            </Form>
           </ModalBody>
         </Modal>
       </div>
